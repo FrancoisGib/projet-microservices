@@ -8,7 +8,7 @@
         <artifactId>microservices</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
+    <name>Logs Service</name>
     <artifactId>logs-service</artifactId>
 
     <properties>

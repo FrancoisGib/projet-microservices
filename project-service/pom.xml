@@ -11,7 +11,7 @@
 	<groupId>com.francoisgib</groupId>
 	<artifactId>project-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>project-service</name>
+	<name>Project Service</name>
 	<description>Project Service</description>
 	<url/>
 	<licenses>
