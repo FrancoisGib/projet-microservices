@@ -1,4 +1,4 @@
-package francoisgib.project_service;
+package com.francoisgib.project_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
