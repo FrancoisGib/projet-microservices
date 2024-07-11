@@ -16,6 +16,7 @@
     </properties>
 
     <modules>
+        <module>api-gateway</module>
         <module>project-service</module>
         <module>logs-service</module>
     </modules>
