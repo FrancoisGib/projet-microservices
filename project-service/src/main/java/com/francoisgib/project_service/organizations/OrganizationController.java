@@ -1,11 +1,10 @@
 package com.francoisgib.project_service.organizations;
 
-import com.francoisgib.project_service.config.MQConfig;
+import com.francoisgib.project_service.MessageService;
 import com.francoisgib.project_service.organizations.models.Organization;
 import com.francoisgib.project_service.organizations.models.OrganizationCreationForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,11 +21,11 @@ import reactor.core.publisher.Mono;
 public class OrganizationController {
 	private final OrganizationService organizationService;
 
-	private final RabbitTemplate rabbitTemplate;
+	private final MessageService messageService;
 
 	@GetMapping
 	public Flux<Organization> getAllOrganizations() {
-		rabbitTemplate.convertAndSend(MQConfig.EXCHANGE, MQConfig.ROUTING_KEY, "Retrieving all organizations");
+		messageService.sendLogMessage("Retrieving all organizations");
 		return organizationService.getAllOrganizations();
 	}
 
