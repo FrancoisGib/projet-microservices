@@ -33,6 +33,13 @@ public class AuthenticationFilter implements GatewayFilter {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		//ServerHttpRequest request = exchange.getRequest();
+		//log.info(request.getURI().getPath());
+		return chain.filter(exchange);
+	}
+	/*
+	@Override
+	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerHttpRequest request = exchange.getRequest();
 		if (routeValidator.isProtectedRoute(request)) {
 			log.info("Checking token existence");
@@ -53,7 +60,7 @@ public class AuthenticationFilter implements GatewayFilter {
 			return chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(authenticationToken));
 		}
 		return this.onError(exchange,"Credentials missing");
-	}
+	}*/
 
 	private Mono<Void> onError(ServerWebExchange exchange, String err) {
 		ServerHttpResponse response = exchange.getResponse();

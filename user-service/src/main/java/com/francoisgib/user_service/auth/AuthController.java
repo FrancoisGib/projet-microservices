@@ -1,6 +1,7 @@
 package com.francoisgib.user_service.auth;
 
 import com.francoisgib.user_service.ResponseObject;
+import com.francoisgib.user_service.jwt.JwtResponse;
 import com.francoisgib.user_service.users.UserMapper;
 import com.francoisgib.user_service.users.UserResourceException;
 import com.francoisgib.user_service.users.models.UserCreationForm;
@@ -24,10 +25,10 @@ public class AuthController {
 	private final AuthService authService;
 
 	@PostMapping("/login")
-	public ResponseEntity<ResponseObject> login(@RequestBody AuthRequest authRequest, HttpServletResponse response) throws UserResourceException {
+	public ResponseEntity<JwtResponse> login(@RequestBody AuthRequest authRequest, HttpServletResponse response) throws UserResourceException {
 		ResponseCookie cookie = authService.login(authRequest);
 		response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-		return ResponseObject.buildResponse("User authenticated", HttpStatus.OK);
+		return new ResponseEntity<>(new JwtResponse(cookie.getValue()), HttpStatus.OK);
 	}
 
 	@PutMapping("/register")

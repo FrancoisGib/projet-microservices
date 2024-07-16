@@ -31,6 +31,8 @@ public class JwtService {
 
 	private String createToken(Map<String, Object> claims, String username) {
 		return Jwts.builder()
+			.setIssuer("user-service")
+			.setAudience("user-service")
 			.setClaims(claims)
 			.setSubject(username)
 			.setIssuedAt(new Date(System.currentTimeMillis()))
