@@ -15,8 +15,7 @@ docker run -itd \
   -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
  -e HTTP_PROXY=http://localhost:9000 registry
 
-il faudra un jour que je setup des certificats pour https
-dans le docker engine:
+il faudra un jour que je setup des certificats pour https mais en attendant
 
 "insecure-registries": [
     "$monip:9000"
