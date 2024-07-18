@@ -21,3 +21,6 @@ il faudra un jour que je setup des certificats pour https mais en attendant
     "$monip:9000"
 ]
 pour autoriser à renvoyer de l'http et à passer par la gateway
+
+il faut que je config docker compose pour gérer les network là tout le monde a accès à tout le monde j'aime pas ça.
+Le but à la fin est d'utiliser kubernetes plutot que docker compose mais je suis nul avec kubernetes donc pour le moment c'est compose
