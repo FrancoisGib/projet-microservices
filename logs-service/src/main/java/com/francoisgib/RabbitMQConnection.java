@@ -4,7 +4,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 public class RabbitMQConnection {
-	private static final String HOST = "localhost";
+	private static final String HOST = System.getProperty("rabbitmq.host");
 	private static final int PORT = 5672;
 	private static final String USERNAME = "guest";
 	private static final String PASSWORD = "guest";

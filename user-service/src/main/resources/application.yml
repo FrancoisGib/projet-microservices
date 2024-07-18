@@ -3,9 +3,9 @@ spring:
     name: user-service
 
   datasource:
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/postgres
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://${POSTGRES_URL}:5432/postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -14,7 +14,7 @@ spring:
     open-in-view: false
 
 server:
-  port: 8081
+  port: ${SERVER_PORT}
 
 jwt:
   secretKey: LeRUmTTsh6f6b2HsuaSuH3hTq6hsiXPqBr7BoAL3s+bCjtVqLuek8ByYytKvqKfc

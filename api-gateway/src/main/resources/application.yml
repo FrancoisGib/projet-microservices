@@ -8,4 +8,4 @@ jwt:
   secretKey: LeRUmTTsh6f6b2HsuaSuH3hTq6hsiXPqBr7BoAL3s+bCjtVqLuek8ByYytKvqKfc
 
 server:
-  port: 9000
+  port: ${SERVER_PORT}

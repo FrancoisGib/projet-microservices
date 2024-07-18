@@ -1,0 +1,5 @@
+config:
+  paths:
+    user-service: user-service:8081
+    project-service: project-service:8082
+    docker-registry: docker-registry:5000

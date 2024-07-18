@@ -1,0 +1,5 @@
+config:
+  paths:
+    user-service: "localhost:8081"
+    project-service: "localhost:8082"
+    docker-registry: "localhost:5000"
