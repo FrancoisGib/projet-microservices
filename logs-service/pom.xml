@@ -11,27 +11,6 @@
     <name>Logs Service</name>
     <artifactId>logs-service</artifactId>
 
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <env>dev</env>
-                <!--suppress UnresolvedMavenProperty -->
-                <rabbitmq.host>${env.RABBITMQ_HOST}</rabbitmq.host>
-            </properties>
-        </profile>
-        <profile>
-            <id>default</id>
-            <properties>
-                <env>default</env>
-                <rabbitmq.host>localhost</rabbitmq.host>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-    </profiles>
-
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -52,7 +31,7 @@
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
-            <version>5.16.0</version>
+            <version>5.17.1</version>
         </dependency>
     </dependencies>
 
