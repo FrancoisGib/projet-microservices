@@ -18,6 +18,7 @@ spec:
       containers:
         - name: api-gateway
           image: api-gateway
+          imagePullPolicy: Never
           ports:
             - containerPort: 9000
               protocol: TCP
@@ -53,11 +54,19 @@ spec:
     - Egress
   ingress:
     - from:
-        - podSelector:
-            matchLabels:
-              app: user-service
+      - podSelector:
+          matchLabels:
+            app: user-service
+    - from:
+      - podSelector:
+          matchLabels:
+            app: docker-registry
   egress:
+    - to:
+      - podSelector:
+          matchLabels:
+            app: user-service
     - to:
         - podSelector:
             matchLabels:
-              app: user-service
+              app: docker-registry

@@ -1,4 +1,4 @@
-SERVICES = project-service user-service api-gateway logs-service postgres mongo rabbitmq
+SERVICES = project-service user-service api-gateway logs-service
 
 docker: build-docker
 	docker compose \
@@ -22,4 +22,5 @@ all:
 
 kubernetes: build-kube
 
-build-kube:
+build-kube: build-jar
+	@$(foreach SERVICE,$(SERVICES), docker build -t francoisgib/microservices:${SERVICE} --file ${SERVICE}/Dockerfile .; docker push francoisgib/microservices:${SERVICE};)
