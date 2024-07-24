@@ -1,4 +1,4 @@
-SERVICES = project-service user-service api-gateway
+SERVICES = project-service user-service api-gateway logs-service postgres mongo rabbitmq
 
 docker: build-docker
 	docker compose \
@@ -7,7 +7,7 @@ docker: build-docker
 	--env-file ./deploy/docker/.env \
 	up
 
-build-docker: $(SERVICES)
+build-docker:
 	docker compose \
 	--env-file ./deploy/docker/.env \
 	--file ./deploy/docker/docker-compose.yml \
