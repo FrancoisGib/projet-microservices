@@ -17,6 +17,31 @@
         <java.version>17</java.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>dev-docker</id>
+            <properties>
+                <env>dev-docker</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev-kubernetes</id>
+            <properties>
+                <env>dev-kubernetes</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>default</id>
+            <properties>
+                <env>default</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -52,10 +77,6 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
         <dependency>
@@ -63,24 +84,6 @@
             <artifactId>spring-security-config</artifactId>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <env>dev</env>
-            </properties>
-        </profile>
-        <profile>
-            <id>default</id>
-            <properties>
-                <env>default</env>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-    </profiles>
 
     <dependencyManagement>
         <dependencies>
@@ -110,5 +113,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

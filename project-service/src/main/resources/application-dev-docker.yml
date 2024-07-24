@@ -6,10 +6,7 @@ spring:
       auto-index-creation: true
 
   rabbitmq:
-    host: ${RABBITMQ_HOST}
+    host: rabbitmq
     port: 5672
     username: guest
     password: guest
-
-server:
-  port: ${SERVER_PORT}

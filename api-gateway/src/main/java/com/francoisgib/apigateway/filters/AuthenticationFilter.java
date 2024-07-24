@@ -33,8 +33,8 @@ public class AuthenticationFilter implements GatewayFilter {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		//ServerHttpRequest request = exchange.getRequest();
-		//log.info(request.getURI().getPath());
+		ServerHttpRequest request = exchange.getRequest();
+		log.info(request.getURI().getPath());
 		return chain.filter(exchange);
 	}
 	/*

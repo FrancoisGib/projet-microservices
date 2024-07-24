@@ -1,0 +1,5 @@
+config:
+  paths:
+    user-service: user-service
+    project-service: project-service
+    docker-registry: docker-registry

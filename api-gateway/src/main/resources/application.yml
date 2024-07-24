@@ -1,11 +1,14 @@
 spring:
   application:
     name: api-gateway
-  main:
-    web-application-type: reactive
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG
 
 jwt:
   secretKey: LeRUmTTsh6f6b2HsuaSuH3hTq6hsiXPqBr7BoAL3s+bCjtVqLuek8ByYytKvqKfc
 
 server:
-  port: ${SERVER_PORT}
+  port: 9000
