@@ -1,5 +1,10 @@
 config:
   paths:
-    user-service: user-service
-    project-service: project-service
+    user-service: lb://USER-SERVICE
+    project-service: lb://PROJECT-SERVICE
     docker-registry: docker-registry
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka

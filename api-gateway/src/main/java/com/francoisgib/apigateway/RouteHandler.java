@@ -32,12 +32,12 @@ public class RouteHandler {
 	public void userServiceRouteLocator(RouteLocatorBuilder.Builder builder) {
 		builder
 			.route("user-service", r -> r.path("/users/**")
-					.uri("http://" + userServicePath));
+					.uri(userServicePath));
 	}
 
 	public void projectServiceRouteLocator(RouteLocatorBuilder.Builder builder) {
 		builder
 				.route("project-service", r -> r.path("/projects/**")
-						.uri("http://" + projectServicePath));
+						.uri(projectServicePath));
 	}
 }

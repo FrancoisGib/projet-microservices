@@ -3,9 +3,6 @@ spring:
     name: user-service
 
   datasource:
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
-    url: jdbc:postgresql://${POSTGRES_URL}:5432/postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -20,7 +17,3 @@ jwt:
   secretKey: LeRUmTTsh6f6b2HsuaSuH3hTq6hsiXPqBr7BoAL3s+bCjtVqLuek8ByYytKvqKfc
   cookieExpiry: 6000
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://discovery-service:8761/eureka

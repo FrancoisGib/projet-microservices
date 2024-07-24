@@ -1,9 +1,8 @@
 spring:
-  data:
-    mongodb:
-      uri: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_URL}:27017
-      database: projects
-      auto-index-creation: true
+  datasource:
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://${POSTGRES_URL}:5432/postgres
 
   rabbitmq:
     host: rabbitmq

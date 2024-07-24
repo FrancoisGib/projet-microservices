@@ -25,8 +25,8 @@ public class UserControllerImpl implements UserController {
 	}
 
 	@Override
-	public ResponseEntity<UserDTO> getUserByEmail(String username) throws UserResourceException {
-		return new ResponseEntity<>(UserMapper.INSTANCE.toDTO(userService.getByEmail(username)), HttpStatus.OK);
+	public ResponseEntity<UserDTO> getUserByEmail(String email) throws UserResourceException {
+		return new ResponseEntity<>(UserMapper.INSTANCE.toDTO(userService.getByEmail(email)), HttpStatus.OK);
 	}
 
 	@Override
