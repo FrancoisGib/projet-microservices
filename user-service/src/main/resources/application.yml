@@ -14,9 +14,13 @@ spring:
     open-in-view: false
 
 server:
-  port: ${SERVER_PORT}
+  port: 8081
 
 jwt:
   secretKey: LeRUmTTsh6f6b2HsuaSuH3hTq6hsiXPqBr7BoAL3s+bCjtVqLuek8ByYytKvqKfc
   cookieExpiry: 6000
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka

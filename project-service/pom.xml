@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.francoisgib</groupId>
 	<artifactId>project-service</artifactId>
@@ -16,9 +16,15 @@
 
 	<profiles>
 		<profile>
-			<id>dev</id>
+			<id>dev-docker</id>
 			<properties>
-				<env>dev</env>
+				<env>dev-docker</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev-kubernetes</id>
+			<properties>
+				<env>dev-kubernetes</env>
 			</properties>
 		</profile>
 		<profile>

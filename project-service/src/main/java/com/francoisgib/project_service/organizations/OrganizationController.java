@@ -16,8 +16,8 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/organizations")
 @RestController
+@RequestMapping("/organizations")
 public class OrganizationController {
 	private final OrganizationService organizationService;
 

@@ -13,7 +13,6 @@ public class RabbitMQConnection {
 		if (host == null) {
 			host = "localhost";
 		}
-		System.out.println("RABBITMQ_HOST: " + host);
 		ConnectionFactory factory = new ConnectionFactory();
 		factory.setHost(host);
 		factory.setPort(PORT);

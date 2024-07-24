@@ -21,6 +21,7 @@ public class RabbitMQConsumer {
 	public void consumeMessages() throws Exception {
 		Connection connection = RabbitMQConnection.createConnection();
 		Channel channel = connection.createChannel();
+		//channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.TOPIC);
 		try {
 			channel.exchangeDeclarePassive(EXCHANGE_NAME);
 		} catch (IOException e) {
