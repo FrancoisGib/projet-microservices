@@ -1,8 +1,11 @@
 spring:
   application:
     name: project-service
-  main:
-    web-application-type: reactive
+
+
+  webflux:
+    base-path: /projects
 
 server:
   port: 8082
+
