@@ -4,7 +4,6 @@ import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.DeliverCallback;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +20,9 @@ public class RabbitMQConsumer {
 	public void consumeMessages() throws Exception {
 		Connection connection = RabbitMQConnection.createConnection();
 		Channel channel = connection.createChannel();
-		try {
-			channel.exchangeDeclarePassive(EXCHANGE_NAME);
-		} catch (IOException e) {
-			channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.TOPIC);
-		}
+
 		channel.queueDeclare(QUEUE_NAME, true, false, false, null);
+		channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.TOPIC, true);
 		channel.queueBind(QUEUE_NAME, EXCHANGE_NAME, ROUTING_KEY);
 
 		DeliverCallback deliverCallback = (consumerTag, delivery) -> {

@@ -90,6 +90,18 @@ services:
     networks:
       - rabbitmq-network
 
+  docker-registry:
+    image: registry
+    volumes:
+      - ./data/auth:/auth
+    environment:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      HTTP_PROXY: http://api-gateway:9000
+    networks:
+      - gateway-network
+
 networks:
   rabbitmq-network:
   postgres-network:

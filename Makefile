@@ -7,12 +7,15 @@ docker: build-docker
 	--env-file ./deploy/docker/.env \
 	up
 
-build-docker:
+build-docker: build-jar
 	docker compose \
 	--env-file ./deploy/docker/.env \
 	--file ./deploy/docker/docker-compose.yml \
 	--project-directory . \
 	build
+
+build-jar:
+	mvn clean install -Dmaven.test.skip
 
 all:
 	@$(foreach SERVICE,$(SERVICES), echo ${SERVICE};)

@@ -23,7 +23,7 @@ public class RouteHandler {
 	@Bean
 	public RouteLocator routes(RouteLocatorBuilder builder, AuthenticationFilter authFilter) {
 		RouteLocatorBuilder.Builder routeBuilder = builder.routes();
-		//routeBuilder.route("docker-registry", r -> r.path("/v2/**").uri("http://" + dockerRegistryPath + "/v2/**"));
+		routeBuilder.route("docker-registry", r -> r.path("/v2/**").uri("http://" + dockerRegistryPath));
 		userServiceRouteLocator(routeBuilder);
 		projectServiceRouteLocator(routeBuilder);
 		return routeBuilder.build();
