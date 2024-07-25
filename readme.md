@@ -1,27 +1,6 @@
 ![](Microservices.png)
+Le but du projet est de créer un service similaire aux azure container apps sur le cloud Azure.
+Pour le moment j'ai surtout créer la plupart des services et fait une version automatisée avec docker compose, je vais bientot faire une version avec kubernetes et ensuite je vais implémenter les services entièrement.
+J'ai donc fait une pipeline qui permet de déployer directement dans ma registry privée sur docker hub pour pouvoir après utiliser ses images avec kubernetes. (je vais surement remplacer par une registry privée en local).
 
-problème avec les registry docker fix, il me faut donc un fichier htpasswd
-htpasswd -bnB user password >> auth/htpasswd
-ce fichier htpasswd contiendra les usernames et password encodés pour se connecter à la registry ou alors un seul par organisation.
-
-puis docker login $monip:9000 (port de ma gateway) (attention: ip en clair publique !!!!)
-
-docker run -itd \
-  -p 5000:5000 \
-  --name registry-test \
-  -v "$(pwd)"/auth:/auth \
-  -e "REGISTRY_AUTH=htpasswd" \
-  -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
-  -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
- -e HTTP_PROXY=http://localhost:9000 registry
-
-il faudra un jour que je setup des certificats pour https mais en attendant
-
-"insecure-registries": [
-    "$monip:9000"
-]
-pour autoriser à renvoyer de l'http et à passer par la gateway
-
-il faut que je config docker compose pour gérer les network là tout le monde a accès à tout le monde j'aime pas ça.
-Le but à la fin est d'utiliser kubernetes plutot que docker compose mais je suis nul avec kubernetes donc pour le moment c'est compose.
-Et faut aussi que je gère les secrets autrement mais c'est chiant les secrets avec docker, là c'est pas propre mais c'est du test là en soit c'est pas grave d'avoir un .env ici.
+Ensuite, il me reste à déterminer si je fait vraiment comme les Azure Container Apps et en gros avoir un Container Environment qui serait un cluster kubernetes, je ne pense pas faire comme ça car cela complexifierait énormément la chose, ce qui n'est pas le but ici. Je veux juste avoir une registry privée pour chaque organisation et qu'ensuite les services se créent automatiquement et bloquer l'accès si une personne ne fait pas partie d'une organisation. 
