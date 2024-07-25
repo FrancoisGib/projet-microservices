@@ -20,5 +20,6 @@
         <module>project-service</module>
         <module>user-service</module>
         <module>logs-service</module>
+        <module>docker-service</module>
     </modules>
 </project>

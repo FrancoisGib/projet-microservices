@@ -1,10 +1,11 @@
-FROM openjdk:17-alpine
+FROM minimified-jre
+LABEL AUTHOR="FrancoisGib"
+
+WORKDIR /app
+COPY user-service/target/*.jar user-service.jar
 
 ENV ENVIRONMENT=default
 
-LABEL author="FrancoisGib"
-EXPOSE 8081
+EXPOSE 8082
 EXPOSE 5672
-
-COPY user-service/target/*.jar user-service.jar
-ENTRYPOINT java -jar -Dspring.profiles.active=$ENVIRONMENT user-service.jar
+ENTRYPOINT /jre/bin/java -jar -Dspring.profiles.active=$ENVIRONMENT user-service.jar

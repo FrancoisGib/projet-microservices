@@ -1,6 +1,9 @@
 spring:
   application:
     name: project-service
+  data:
+    mongodb:
+      auto-index-creation: true
 
   webflux:
     base-path: /projects

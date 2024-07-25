@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres
+    image: postgres:16.3-alpine
     environment:
       POSTGRES_PASSWORD: postgres
     volumes:
@@ -90,7 +90,7 @@ services:
       LOG_PATH: logback.log
       RABBITMQ_HOST: rabbitmq
     volumes:
-      - ./data/logs:/logs
+      - ./data/logs:/app/logs
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -115,6 +115,15 @@ services:
       - gateway-network
     ports:
       - 8761:8761
+
+  #docker-dind:
+  #  image: docker:dind
+
+  #docker-service:
+  #  build:
+  #    dockerfile: ./docker-service/Dockerfile
+  #  ports:
+  #    - 8083:8083
 
 networks:
   rabbitmq-network:

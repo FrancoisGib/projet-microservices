@@ -23,10 +23,15 @@ public class RouteHandler {
 	@Bean
 	public RouteLocator routes(RouteLocatorBuilder builder, AuthenticationFilter authFilter) {
 		RouteLocatorBuilder.Builder routeBuilder = builder.routes();
-		routeBuilder.route("docker-registry", r -> r.path("/v2/**").uri("http://" + dockerRegistryPath));
+		dockerRegistryRouteLocator(routeBuilder, authFilter);
 		userServiceRouteLocator(routeBuilder);
 		projectServiceRouteLocator(routeBuilder);
 		return routeBuilder.build();
+	}
+
+	public void dockerRegistryRouteLocator(RouteLocatorBuilder.Builder builder, AuthenticationFilter authFilter) {
+		builder.route("docker-registry", r -> r.path("/v2/**")
+				.filters(f -> f.filter(authFilter)).uri("http://" + dockerRegistryPath));
 	}
 
 	public void userServiceRouteLocator(RouteLocatorBuilder.Builder builder) {
