@@ -17,11 +17,14 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: api-gateway
-          imagePullPolicy: Never
+          image: francoisgib/microservices:api-gateway
+          imagePullPolicy: Always
           ports:
             - containerPort: 9000
               protocol: TCP
+          env:
+            - name: ENVIRONMENT
+              value: dev-kubernetes
 
 ---
 
