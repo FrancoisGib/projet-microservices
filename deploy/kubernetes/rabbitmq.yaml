@@ -1,42 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres-deployment
+  name: rabbitmq-deployment
   labels:
-    app: postgres
+    app: rabbitmq
 spec:
   selector:
     matchLabels:
-      app: postgres
+      app: rabbitmq
   template:
     metadata:
-      name: postgres
+      name: rabbitmq
       labels:
-        app: postgres
+        app: rabbitmq
     spec:
       containers:
-        - name: postgres
-          image: postgres:16.3-alpine
+        - name: rabbitmq
+          image: rabbitmq:3-management
           ports:
-            - containerPort: 5432
+            - containerPort: 5672
               protocol: TCP
-          env:
-            - name: POSTGRES_PASSWORD
-              value: postgres
-        # volume à ajouter
+
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-service
+  name: rabbitmq-service
 spec:
   selector:
-    app: postgres
+    app: rabbitmq
   ports:
     - protocol: TCP
-      port: 5432
-      targetPort: 5432
+      port: 5672
+      targetPort: 5672
   type: ClusterIP
 
 ---
@@ -44,12 +41,12 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: postgres-network
+  name: rabbitmq-network
   namespace: default
 spec:
   podSelector:
     matchLabels:
-      app: postgres
+      app: rabbitmq
   policyTypes:
     - Ingress
     - Egress
@@ -57,9 +54,9 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              app: user-service
+              rabbitmq-producer: "true"
   egress:
     - to:
         - podSelector:
             matchLabels:
-              app: user-service
+              rabbitmq-consumer: "true"

@@ -24,10 +24,14 @@ build-docker: build-jar
 build-jar:
 	mvn clean install -Dmaven.test.skip
 
-all:
-	@$(foreach SERVICE,$(SERVICES), echo ${SERVICE};)
 
-kubernetes: build-kube
+
+kubernetes: build-kube run-kube
+
+KUBE_SERVICES = postgres rabbitmq api-gateway user-service logs-service
+
+run-kube:
+	@$(foreach SERVICE,$(KUBE_SERVICES), kubectl apply -f deploy/kubernetes/${SERVICE};)
 
 build-kube: build-jar
 	docker build --file ./deploy/docker/Dockerfile-minimified-jre --tag minimified-jre .

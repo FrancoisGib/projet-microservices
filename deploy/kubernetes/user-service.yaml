@@ -13,13 +13,26 @@ spec:
       name: user-service
       labels:
         app: user-service
+        rabbitmq-producer: "true"
     spec:
       containers:
         - name: user-service
-          image: user-service
+          image: francoisgib/microservices:user-service
+          imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
               protocol: TCP
+          env:
+            - name: ENVIRONMENT
+              value: dev-kubernetes
+            - name: POSTGRES_URL
+              value: postgres-service
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+            - name: RABBITMQ_HOST
+              value: rabbitmq-service
 
 ---
 
@@ -33,7 +46,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080
+      targetPort: 8081
   type: ClusterIP
 
 ---
@@ -68,3 +81,7 @@ spec:
         - podSelector:
             matchLabels:
               app: api-gateway
+    - to:
+        - podSelector:
+            matchLabels:
+              app: rabbitmq

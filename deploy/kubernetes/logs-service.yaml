@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logs-service-deployment
+  labels:
+    app: logs-service
+spec:
+  selector:
+    matchLabels:
+      app: logs-service
+  template:
+    metadata:
+      name: logs-service
+      labels:
+        app: logs-service
+        rabbitmq-consumer: "true"
+    spec:
+      containers:
+        - name: logs-service
+          image: francoisgib/microservices:logs-service
+          imagePullPolicy: Always
+          env:
+            - name: RABBITMQ_HOST
+              value: rabbitmq-service
+      # volume à ajouter
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: logs-service-network
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: logs-service
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: rabbitmq
