@@ -29,5 +29,5 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build, containerize, push to registry
-      run: make kubernetes
+      run: make build-kube
    
