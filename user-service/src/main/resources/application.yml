@@ -16,4 +16,3 @@ server:
 jwt:
   secretKey: LeRUmTTsh6f6b2HsuaSuH3hTq6hsiXPqBr7BoAL3s+bCjtVqLuek8ByYytKvqKfc
   cookieExpiry: 6000
-

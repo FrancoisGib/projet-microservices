@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
 @RequiredArgsConstructor
 @Service
@@ -23,9 +24,14 @@ public class AuthService {
 	@Value("${jwt.cookieExpiry}")
 	private Long cookieExpiry;
 
+	@Value("${services.project-service.host}")
+	private String projectServiceHost;
+
 	private final PasswordEncoder passwordEncoder;
 
 	private final MessageService messageService;
+
+	private final RestClient restClient;
 
 	public ResponseCookie login(AuthRequest authRequest) throws UserResourceException {
 		User user = userService.getByUsername(authRequest.username());
@@ -33,7 +39,12 @@ public class AuthService {
 			messageService.sendLogMessage("Wrong credentials for user : " + authRequest.username());
 			throw new UserResourceException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
 		}
-		String accessToken = jwtService.generateToken(authRequest.username(), user.getOrganizationId());
+
+		String userOrganizationName = restClient.get()
+				.uri(projectServiceHost + "/organizations/" + user.getOrganizationId() + "/name")
+				.retrieve().body(String.class);
+
+		String accessToken = jwtService.generateToken(authRequest.username(), userOrganizationName);
 		ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
 			.httpOnly(true)
 			.secure(true)

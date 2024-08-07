@@ -1,6 +1,7 @@
 package com.francoisgib.apigateway;
 
 import com.francoisgib.apigateway.filters.AuthenticationFilter;
+import com.francoisgib.apigateway.filters.LogFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -21,11 +22,12 @@ public class RouteHandler {
 	private String dockerRegistryPath;
 
 	@Bean
-	public RouteLocator routes(RouteLocatorBuilder builder, AuthenticationFilter authFilter) {
+	public RouteLocator routes(RouteLocatorBuilder builder, AuthenticationFilter authFilter, LogFilter logFilter) {
 		RouteLocatorBuilder.Builder routeBuilder = builder.routes();
 		dockerRegistryRouteLocator(routeBuilder, authFilter);
 		userServiceRouteLocator(routeBuilder);
 		projectServiceRouteLocator(routeBuilder);
+		organizationServiceRouteLocator(routeBuilder, logFilter);
 		return routeBuilder.build();
 	}
 
@@ -44,5 +46,12 @@ public class RouteHandler {
 		builder
 				.route("project-service", r -> r.path("/projects/**")
 						.uri(projectServicePath));
+	}
+
+	public void organizationServiceRouteLocator(RouteLocatorBuilder.Builder builder, LogFilter logFilter) {
+		builder.route("dynamic_route", r -> r
+				.path("/{organization}/**")
+						.filters(f -> f.filter(logFilter)).uri("no://op"))
+				.build();
 	}
 }

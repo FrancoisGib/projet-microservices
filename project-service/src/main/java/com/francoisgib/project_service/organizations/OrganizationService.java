@@ -19,6 +19,10 @@ public class OrganizationService {
 		return organizationRepository.findAll();
 	}
 
+	public Mono<Organization> getOrganizationById(String id) {
+		return organizationRepository.findById(id);
+	}
+
 	public Mono<Void> deleteAllOrganizations() {
 		return organizationRepository.deleteAll();
 	}

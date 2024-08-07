@@ -13,3 +13,7 @@ spring:
 eureka:
   client:
     enabled: false
+
+services:
+  project-service:
+    host: http://project-service

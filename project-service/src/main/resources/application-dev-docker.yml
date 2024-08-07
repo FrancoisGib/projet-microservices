@@ -14,3 +14,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka-server:8761/eureka
+
+services:
+  project-service:
+    host: http://project-service:8082

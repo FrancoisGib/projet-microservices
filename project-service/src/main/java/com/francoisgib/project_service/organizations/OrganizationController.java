@@ -5,12 +5,7 @@ import com.francoisgib.project_service.organizations.models.Organization;
 import com.francoisgib.project_service.organizations.models.OrganizationCreationForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -27,6 +22,17 @@ public class OrganizationController {
 	public Flux<Organization> getAllOrganizations() {
 		messageService.sendLogMessage("Retrieving all organizations");
 		return organizationService.getAllOrganizations();
+	}
+
+	@GetMapping("/{organizationId}")
+	public Mono<Organization> getOrganizationById(@PathVariable String organizationId) {
+		messageService.sendLogMessage("Retrieving organization by id: " + organizationId);
+		return organizationService.getOrganizationById(organizationId);
+	}
+
+	@GetMapping("/{organizationId}/name")
+	public Mono<String> getOrganizationNameById(@PathVariable String organizationId) {
+		return organizationService.getOrganizationById(organizationId).map(Organization::getName);
 	}
 
 	@DeleteMapping
