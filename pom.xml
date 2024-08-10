@@ -18,9 +18,8 @@
     <modules>
         <module>api-gateway</module>
         <module>project-service</module>
-        <module>user-service</module>
         <module>logs-service</module>
-        <module>docker-service</module>
         <module>kubernetes-service</module>
+        <module>common</module>
     </modules>
 </project>

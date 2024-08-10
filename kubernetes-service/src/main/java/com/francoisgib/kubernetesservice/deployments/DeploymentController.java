@@ -1,8 +1,8 @@
 package com.francoisgib.kubernetesservice.deployments;
 
+import com.francoisgib.kubernetes.DeploymentCreationForm;
 import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.models.V1Deployment;
-import io.kubernetes.client.openapi.models.V1DeploymentList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +31,7 @@ public class DeploymentController {
     }
 
     @PostMapping
-    public V1Deployment createDeployment() throws ApiException {
-        return deploymentService.createDeployment();
+    public V1Deployment createDeployment(@RequestBody DeploymentCreationForm deploymentCreationForm) throws ApiException {
+        return deploymentService.createDeployment(deploymentCreationForm);
     }
 }

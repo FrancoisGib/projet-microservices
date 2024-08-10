@@ -2,35 +2,34 @@ package com.francoisgib.project_service.organizations;
 
 import com.francoisgib.project_service.organizations.models.Organization;
 import com.francoisgib.project_service.organizations.models.OrganizationCreationForm;
-import com.francoisgib.project_service.users.Role;
-import com.francoisgib.project_service.users.User;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
 public class OrganizationService {
 	private final OrganizationRepository organizationRepository;
 
-	public Flux<Organization> getAllOrganizations() {
+	public List<Organization> getAllOrganizations() {
 		return organizationRepository.findAll();
 	}
 
-	public Mono<Organization> getOrganizationById(String id) {
-		return organizationRepository.findById(id);
+	public Organization getOrganizationById(int id) {
+		return organizationRepository.findById(id).orElseThrow();
 	}
 
-	public Mono<Void> deleteAllOrganizations() {
-		return organizationRepository.deleteAll();
+	public void deleteAllOrganizations() {
+		organizationRepository.deleteAll();
 	}
 
-	public Mono<Organization> createOrganization(OrganizationCreationForm organizationCreationForm) {
+	public Organization createOrganization(OrganizationCreationForm organizationCreationForm) {
 		Organization organization = Organization.builder()
-			.name(organizationCreationForm.getName())
-			.users(Set.of(new User(organizationCreationForm.getOwnerId(), Role.ADMIN)))
+			.name(organizationCreationForm.getOrganizationName())
+			.users(Set.of())
+			.projects(Set.of())
 			.build();
 		return organizationRepository.save(organization);
 	}

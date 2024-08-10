@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: francoisgib/microservices:api-gateway
-          imagePullPolicy: Always
+          image: api-gateway:local
+          imagePullPolicy: Never
           ports:
             - containerPort: 9000
               protocol: TCP
@@ -40,36 +40,3 @@ spec:
       port: 9000
       targetPort: 9000
   type: LoadBalancer
-
----
-
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: gateway-network
-  namespace: default
-spec:
-  podSelector:
-    matchLabels:
-      app: api-gateway
-  policyTypes:
-    - Ingress
-    - Egress
-  ingress:
-    - from:
-      - podSelector:
-          matchLabels:
-            app: user-service
-    - from:
-      - podSelector:
-          matchLabels:
-            app: docker-registry
-  egress:
-    - to:
-      - podSelector:
-          matchLabels:
-            app: user-service
-    - to:
-        - podSelector:
-            matchLabels:
-              app: docker-registry

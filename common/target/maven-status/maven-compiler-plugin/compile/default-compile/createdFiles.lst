@@ -1,0 +1,8 @@
+com/francoisgib/kubernetes/ServiceCreationForm.class
+com/francoisgib/kubernetes/ServiceType.class
+com/francoisgib/kubernetes/DeploymentCreationForm$DeploymentCreationFormBuilder.class
+com/francoisgib/kubernetes/ServicePortType.class
+com/francoisgib/kubernetes/ServicePort.class
+com/francoisgib/UserPrincipal.class
+com/francoisgib/kubernetes/ServiceCreationForm$ServiceCreationFormBuilder.class
+com/francoisgib/kubernetes/DeploymentCreationForm.class

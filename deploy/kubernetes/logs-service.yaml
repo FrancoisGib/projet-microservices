@@ -17,28 +17,15 @@ spec:
     spec:
       containers:
         - name: logs-service
-          image: francoisgib/microservices:logs-service
-          imagePullPolicy: Always
+          image: logs-service:local
+          imagePullPolicy: Never
           env:
             - name: RABBITMQ_HOST
               value: rabbitmq-service
-      # volume à ajouter
-
----
-
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: logs-service-network
-  namespace: default
-spec:
-  podSelector:
-    matchLabels:
-      app: logs-service
-  policyTypes:
-    - Ingress
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              app: rabbitmq
+          volumeMounts:
+            - mountPath: /app/logs
+              name: logs-volume
+      volumes:
+        - name: logs-volume
+          hostPath:
+            path: /data/logs

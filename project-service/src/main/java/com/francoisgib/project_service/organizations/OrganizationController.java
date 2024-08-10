@@ -3,11 +3,15 @@ package com.francoisgib.project_service.organizations;
 import com.francoisgib.project_service.MessageService;
 import com.francoisgib.project_service.organizations.models.Organization;
 import com.francoisgib.project_service.organizations.models.OrganizationCreationForm;
+import com.francoisgib.project_service.organizations.models.OrganizationDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,29 +23,25 @@ public class OrganizationController {
 	private final MessageService messageService;
 
 	@GetMapping
-	public Flux<Organization> getAllOrganizations() {
+	public ResponseEntity<List<OrganizationDTO>> getAllOrganizations() {
 		messageService.sendLogMessage("Retrieving all organizations");
-		return organizationService.getAllOrganizations();
+		return ResponseEntity.ok(OrganizationMapper.INSTANCE.toDTO(organizationService.getAllOrganizations()));
 	}
 
 	@GetMapping("/{organizationId}")
-	public Mono<Organization> getOrganizationById(@PathVariable String organizationId) {
+	public ResponseEntity<Organization> getOrganizationById(@PathVariable int organizationId) {
 		messageService.sendLogMessage("Retrieving organization by id: " + organizationId);
-		return organizationService.getOrganizationById(organizationId);
-	}
-
-	@GetMapping("/{organizationId}/name")
-	public Mono<String> getOrganizationNameById(@PathVariable String organizationId) {
-		return organizationService.getOrganizationById(organizationId).map(Organization::getName);
+		return ResponseEntity.ok(organizationService.getOrganizationById(organizationId));
 	}
 
 	@DeleteMapping
-	public Mono<Void> deleteAllOrganizations() {
-		return organizationService.deleteAllOrganizations();
+	public ResponseEntity<Void> deleteAllOrganizations() {
+		organizationService.deleteAllOrganizations();
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	@PostMapping
-	public Mono<Organization> createOrganization(@RequestBody OrganizationCreationForm organizationCreationForm) {
-		return organizationService.createOrganization(organizationCreationForm);
+	public ResponseEntity<Organization> createOrganization(@Valid @RequestBody OrganizationCreationForm organizationCreationForm) {
+		return ResponseEntity.ok(organizationService.createOrganization(organizationCreationForm));
 	}
 }

@@ -1,34 +1,32 @@
 package com.francoisgib.project_service.organizations.models;
 
-import com.francoisgib.project_service.users.Role;
-import com.francoisgib.project_service.users.User;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
+import com.francoisgib.project_service.projects.Project;
+import com.francoisgib.project_service.users.models.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Set;
 
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "organization")
+@Entity
+@Table(name = "organization")
 public class Organization {
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
-	@Size(max = 30)
-	@NotNull
-	@NotBlank
-	@Indexed(unique = true)
+	@Column(nullable = false, unique = true)
 	private String name;
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "organization", cascade = CascadeType.ALL)
 	private Set<User> users;
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "organization", cascade = CascadeType.ALL)
+	private Set<Project> projects;
 }

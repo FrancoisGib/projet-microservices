@@ -11,6 +11,6 @@ public class MessageService {
 	private final RabbitTemplate rabbitTemplate;
 
 	public void sendLogMessage(String message) {
-		rabbitTemplate.convertAndSend(MQLogConfig.EXCHANGE, MQLogConfig.ROUTING_KEY, "Project Service : " + message);
+		//rabbitTemplate.convertAndSend(MQLogConfig.EXCHANGE, MQLogConfig.ROUTING_KEY, message);
 	}
 }

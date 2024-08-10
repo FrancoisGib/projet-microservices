@@ -1,5 +1,6 @@
 package com.francoisgib.kubernetesservice.services;
 
+import com.francoisgib.kubernetes.ServiceCreationForm;
 import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.models.V1Service;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class ServiceController {
     }
 
     @PostMapping
-    public V1Service createService() throws ApiException {
-        return serviceService.createService();
+    public V1Service createService(@RequestBody ServiceCreationForm serviceCreationForm) throws ApiException {
+        return serviceService.createService(serviceCreationForm);
     }
 }

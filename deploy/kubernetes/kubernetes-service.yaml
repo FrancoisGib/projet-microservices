@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubernetes-service-deployment
+  labels:
+    app: kubernetes-service
+spec:
+  selector:
+    matchLabels:
+      app: kubernetes-service
+  template:
+    metadata:
+      name: kubernetes-service
+      labels:
+        app: kubernetes-service
+    spec:
+      containers:
+        - name: kubernetes-service
+          image: kubernetes-service:local
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8083
+              protocol: TCP
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubernetes-service
+spec:
+  selector:
+    app: kubernetes-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8083
+  type: ClusterIP

@@ -1,6 +1,6 @@
 package com.francoisgib.apigateway.filters;
 
-import com.francoisgib.apigateway.UserPrincipal;
+import com.francoisgib.UserPrincipal;
 import com.francoisgib.apigateway.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,13 +34,11 @@ public class AuthenticationFilter implements GatewayFilter {
             }
 
             final String token = cookie.getValue();
-            String username = jwtService.extractUsername(token);
-            String organization = jwtService.extractOrganization(token);
-            if (username == null || organization == null || !jwtService.validateToken(token)) {
+            if (!jwtService.validateToken(token)) {
                 return this.onError(exchange, "Invalid token");
             }
 
-            UserPrincipal principal = new UserPrincipal(username, organization);
+            UserPrincipal principal = jwtService.extractPrincipal(token);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     principal, null, null);
             return chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(authenticationToken));

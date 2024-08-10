@@ -1,20 +1,18 @@
 package com.francoisgib.apigateway.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
+import com.francoisgib.UserPrincipal;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
-import java.security.Key;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.el.stream.Stream;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.security.Key;
+import java.util.List;
+import java.util.function.Function;
 
 @Slf4j
 @Service
@@ -22,12 +20,15 @@ public class JwtService {
 	@Value("${jwt.secretKey}")
 	private String jwtSecret;
 
-	public String extractUsername(String token) {
-		return extractClaim(token, Claims::getSubject);
+	public UserPrincipal extractPrincipal(String token) {
+		return new UserPrincipal(
+				extractPrincipal(token, "userId", Long.class),
+				extractPrincipal(token, "organizationId", Integer.class),
+				extractPrincipal(token, "organizationName", String.class));
 	}
 
-	public String extractOrganization(String token) {
-		return extractClaim(token, (claimsResolver) -> claimsResolver.get("organization", String.class));
+	public <T> T extractPrincipal(String token, String fieldName, Class<T> classType) {
+		return extractClaim(token, (claimsResolver) -> claimsResolver.get(fieldName, classType));
 	}
 
 	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {

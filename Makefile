@@ -1,4 +1,4 @@
-SERVICES = project-service user-service api-gateway logs-service
+SERVICES = project-service api-gateway logs-service kubernetes-service
 
 docker: build-docker
 	docker compose \
@@ -24,15 +24,22 @@ build-docker: build-jar
 build-jar:
 	mvn clean install -Dmaven.test.skip
 
+kubernetes: build-jar build-kube run-kube
 
-
-kubernetes: build-kube run-kube
-
-KUBE_SERVICES = postgres rabbitmq api-gateway user-service logs-service
+CREATE_FIRST = postgres rabbitmq kubernetes-service api-gateway
+CREATE_AFTER = logs-service project-service
 
 run-kube:
-	@$(foreach SERVICE,$(KUBE_SERVICES), kubectl apply -f deploy/kubernetes/${SERVICE};)
+	kubectl create -f deploy/kubernetes/policies.yaml # une seule fois
+
+	@$(foreach SERVICE,$(KUBE_SERVICES), kubectl apply -f deploy/kubernetes/${SERVICE}.yaml;)
 
 build-kube: build-jar
 	docker build --file ./deploy/docker/Dockerfile-minimified-jre --tag minimified-jre .
-	@$(foreach SERVICE,$(SERVICES), docker build -t francoisgib/microservices:${SERVICE} --file ${SERVICE}/Dockerfile .; docker push francoisgib/microservices:${SERVICE};)
+	@$(foreach SERVICE,$(SERVICES), docker build -t ${SERVICE}:local --file ${SERVICE}/Dockerfile .; minikube image load ${SERVICE}:local;)
+
+
+KUBE_SERVICES = postgres rabbitmq api-gateway logs-service kubernetes-service project-service
+stop-kube:
+	kubectl delete -f deploy/kubernetes/policies.yaml
+	@$(foreach SERVICE,$(KUBE_SERVICES), kubectl delete -f deploy/kubernetes/${SERVICE}.yaml;)

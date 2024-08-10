@@ -1,5 +1,6 @@
 package com.francoisgib.kubernetesservice.services;
 
+import com.francoisgib.kubernetes.ServiceCreationForm;
 import io.kubernetes.client.custom.IntOrString;
 import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
@@ -8,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -19,24 +19,26 @@ public class ServiceService {
         return coreV1Api.listServiceForAllNamespaces().execute();
     }
 
-    public V1Service createService() throws ApiException {
+    public V1Service createService(ServiceCreationForm serviceCreationForm) throws ApiException {
         V1ObjectMeta metadata = new V1ObjectMeta()
-                .name("service-test");
+                .name(serviceCreationForm.getName() + "-service");
+
+        List<V1ServicePort> ports = serviceCreationForm.getPorts()
+                .stream().map(port -> new V1ServicePort()
+                        .port(port.port())
+                        .protocol(port.protocol().toString())
+                        .targetPort(new IntOrString(port.targetPort())))
+                .toList();
 
         V1ServiceSpec spec = new V1ServiceSpec()
-                .selector(Map.of("app", "app-organization"))
-                .type("ClusterIP")
-                .ports(List.of(
-                        new V1ServicePort()
-                                .protocol("TCP")
-                                .port(80)
-                                .targetPort(new IntOrString(80))
-                ));
+                .selector(serviceCreationForm.getLabels())
+                .type(serviceCreationForm.getType().toString())
+                .ports(ports);
 
         V1Service service = new V1Service()
                 .spec(spec)
                 .metadata(metadata);
 
-        return coreV1Api.createNamespacedService("organization", service).execute();
+        return coreV1Api.createNamespacedService(serviceCreationForm.getNamespace(), service).execute();
     }
 }

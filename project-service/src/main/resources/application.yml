@@ -1,13 +1,18 @@
 spring:
   application:
-    name: project-service
-  data:
-    mongodb:
-      auto-index-creation: true
+    name: user-service
 
-  webflux:
-    base-path: /projects
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
 
 server:
-  port: 8082
+  port: 8081
 
+jwt:
+  secretKey: LeRUmTTsh6f6b2HsuaSuH3hTq6hsiXPqBr7BoAL3s+bCjtVqLuek8ByYytKvqKfc
+  cookieExpiry: 6000
