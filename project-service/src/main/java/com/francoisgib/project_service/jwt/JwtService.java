@@ -1,6 +1,6 @@
 package com.francoisgib.project_service.jwt;
 
-import com.francoisgib.UserPrincipal;
+import com.francoisgib.common.UserPrincipal;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;

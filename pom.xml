@@ -19,7 +19,7 @@
         <module>api-gateway</module>
         <module>project-service</module>
         <module>logs-service</module>
-        <module>kubernetes-service</module>
+        <module>kube-service</module>
         <module>common</module>
     </modules>
 </project>

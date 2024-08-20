@@ -1,17 +1,15 @@
 package com.francoisgib.apigateway.jwt;
 
-import com.francoisgib.UserPrincipal;
+import com.francoisgib.common.UserPrincipal;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.el.stream.Stream;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.List;
 import java.util.function.Function;
 
 @Slf4j

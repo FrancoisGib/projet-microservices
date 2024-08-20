@@ -1,4 +1,4 @@
-SERVICES = project-service api-gateway logs-service kubernetes-service
+SERVICES = project-service api-gateway logs-service kube-service
 
 docker: build-docker
 	docker compose \
@@ -26,7 +26,7 @@ build-jar:
 
 kubernetes: build-jar build-kube run-kube
 
-CREATE_FIRST = postgres rabbitmq kubernetes-service api-gateway
+CREATE_FIRST = postgres rabbitmq kube-service api-gateway
 CREATE_AFTER = logs-service project-service
 
 run-kube:
@@ -39,7 +39,7 @@ build-kube: build-jar
 	@$(foreach SERVICE,$(SERVICES), docker build -t ${SERVICE}:local --file ${SERVICE}/Dockerfile .; minikube image load ${SERVICE}:local;)
 
 
-KUBE_SERVICES = postgres rabbitmq api-gateway logs-service kubernetes-service project-service
+KUBE_SERVICES = postgres rabbitmq api-gateway logs-service kube-service project-service
 stop-kube:
 	kubectl delete -f deploy/kubernetes/policies.yaml
 	@$(foreach SERVICE,$(KUBE_SERVICES), kubectl delete -f deploy/kubernetes/${SERVICE}.yaml;)

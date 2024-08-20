@@ -1,7 +1,9 @@
 package com.francoisgib.project_service.projects;
 
+import com.francoisgib.project_service.projects.models.ProjectAccessRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping
+@RequestMapping("/projects")
 public class ProjectController {
     private final ProjectService projectService;
 

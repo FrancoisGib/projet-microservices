@@ -1,6 +1,6 @@
 package com.francoisgib.project_service.auth;
 
-import com.francoisgib.UserPrincipal;
+import com.francoisgib.common.UserPrincipal;
 import com.francoisgib.project_service.MessageService;
 import com.francoisgib.project_service.jwt.JwtService;
 import com.francoisgib.project_service.users.UserResourceException;
