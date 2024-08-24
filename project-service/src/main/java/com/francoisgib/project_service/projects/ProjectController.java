@@ -1,9 +1,10 @@
 package com.francoisgib.project_service.projects;
 
-import com.francoisgib.project_service.projects.models.ProjectAccessRequest;
+import com.francoisgib.project_service.projects.models.ProjectCreationForm;
+import com.francoisgib.project_service.projects.models.ProjectDTO;
+import com.francoisgib.project_service.users.UserResourceException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +17,18 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @PostMapping
-    public ResponseEntity<Project> createProject(@Valid @RequestBody ProjectCreationForm projectCreationForm) {
-        return ResponseEntity.ok(projectService.createProject(projectCreationForm));
+    public ResponseEntity<ProjectDTO> createProject(@Valid @RequestBody ProjectCreationForm projectCreationForm) throws UserResourceException {
+        return ResponseEntity.ok(ProjectMapper.INSTANCE.toDTO(projectService.createProject(projectCreationForm)));
+    }
+
+    @DeleteMapping("/{projectId}")
+    public ResponseEntity<Void> deleteProject(@PathVariable Long projectId) {
+        projectService.deleteProject(projectId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
-    public ResponseEntity<List<Project>> getAllProjects() {
-        return ResponseEntity.ok(projectService.getAllProjects());
+    public ResponseEntity<List<ProjectDTO>> getAllProjects() {
+        return ResponseEntity.ok(ProjectMapper.INSTANCE.toDTO(projectService.getAllProjects()));
     }
 }

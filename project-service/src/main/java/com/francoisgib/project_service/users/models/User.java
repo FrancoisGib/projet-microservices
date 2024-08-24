@@ -33,7 +33,7 @@ public class User {
 	@JoinColumn(name = "organization_id")
 	private Organization organization;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "user_project",
 			joinColumns = @JoinColumn(name = "user_id"),

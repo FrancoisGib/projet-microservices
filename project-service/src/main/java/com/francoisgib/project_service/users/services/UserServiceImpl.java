@@ -8,11 +8,12 @@ import com.francoisgib.project_service.users.UserResourceException;
 import com.francoisgib.project_service.users.models.User;
 import com.francoisgib.project_service.users.models.UserCreationForm;
 import com.francoisgib.project_service.users.models.UserUpdateForm;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component

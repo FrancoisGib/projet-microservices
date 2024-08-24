@@ -1,8 +1,6 @@
 config:
   paths:
-    user-service: http://user-service
     project-service: http://project-service
-    docker-registry: http://docker-registry
 
 eureka:
   client:

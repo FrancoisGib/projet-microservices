@@ -23,7 +23,7 @@ public class RouteHandler {
 
 	public void projectServiceRouteLocator(RouteLocatorBuilder.Builder builder) {
 		builder
-				.route("project-service", r -> r.path("/projects/**")
+				.route("project-service", r -> r.path("/projects/**","/organizations/**", "/users/**", "/login")
 						.uri(projectServicePath));
 	}
 }

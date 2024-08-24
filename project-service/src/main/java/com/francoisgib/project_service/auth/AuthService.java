@@ -17,41 +17,46 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class AuthService {
-	private final UserService userService;
+    private final UserService userService;
 
-	private final JwtService jwtService;
+    private final JwtService jwtService;
 
-	@Value("${jwt.cookieExpiry}")
-	private Long cookieExpiry;
+    @Value("${jwt.cookieExpiry}")
+    private Long cookieExpiry;
 
-	private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-	private final MessageService messageService;
+    private final MessageService messageService;
 
-	public ResponseCookie login(AuthRequest authRequest) throws UserResourceException {
-		User user = userService.findByUsername(authRequest.username());
-		if (!passwordEncoder.matches(authRequest.password(), user.getPassword())) {
-			messageService.sendLogMessage("Wrong credentials for user : " + authRequest.username());
-			throw new UserResourceException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
-		}
+    public LoginResponse login(AuthRequest authRequest) throws UserResourceException {
+        User user = userService.findByUsername(authRequest.username());
+        if (!passwordEncoder.matches(authRequest.password(), user.getPassword())) {
+            messageService.sendLogMessage("Wrong credentials for user : " + authRequest.username());
+            throw new UserResourceException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
+        }
 
-		UserPrincipal principal = new UserPrincipal(
-				user.getId(),
-				user.getOrganization().getId(),
-				user.getOrganization().getName());
+        UserPrincipal principal = new UserPrincipal(
+                user.getId(),
+                user.getOrganization().getId(),
+                user.getOrganization().getName());
 
-		String accessToken = jwtService.generateToken(user.getUsername(), principal);
-		ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
-			.httpOnly(true)
-			.secure(true)
-			.path("/")
-			.maxAge(cookieExpiry)
-			.build();
-		messageService.sendLogMessage("Logging in user : " + authRequest.username());
-		return cookie;
-	}
+        String accessToken = jwtService.generateToken(user.getUsername(), principal);
+        ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(cookieExpiry)
+                .build();
+        messageService.sendLogMessage("Logging in user : " + authRequest.username());
+        AuthResponse authResponse = new AuthResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getOrganization().getId(),
+                user.getOrganization().getName());
+        return new LoginResponse(cookie, authResponse);
+    }
 
-	public User register(UserCreationForm userCreationForm) {
-		return userService.createUser(userCreationForm);
-	}
+    public User register(UserCreationForm userCreationForm) {
+        return userService.createUser(userCreationForm);
+    }
 }

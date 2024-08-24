@@ -1,4 +1,4 @@
-package com.francoisgib.project_service.projects;
+package com.francoisgib.project_service.projects.models;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

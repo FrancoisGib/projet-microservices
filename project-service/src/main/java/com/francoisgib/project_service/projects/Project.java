@@ -1,6 +1,7 @@
 package com.francoisgib.project_service.projects;
 
 import com.francoisgib.project_service.organizations.models.Organization;
+import com.francoisgib.project_service.projects.models.ProjectScope;
 import com.francoisgib.project_service.users.models.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,11 @@ public class Project {
     @Column(nullable = false)
     private ProjectScope scope;
 
-    @ManyToMany(mappedBy = "projects")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_project",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
 
     @ManyToOne

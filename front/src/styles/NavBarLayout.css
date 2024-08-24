@@ -1,0 +1,8 @@
+#nav-bar-layout {
+  display: flex;
+  justify-content: start;
+}
+
+#page-container {
+  width: 85vw;
+}

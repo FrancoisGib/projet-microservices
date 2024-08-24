@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableDiscoveryClient
-public class UserServiceApplication {
+public class ProjectServiceApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(UserServiceApplication.class, args);
+		SpringApplication.run(ProjectServiceApplication.class, args);
 	}
 }
