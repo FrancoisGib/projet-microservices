@@ -7,6 +7,8 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import static org.springframework.cloud.gateway.filter.factory.DedupeResponseHeaderGatewayFilterFactory.Strategy.RETAIN_UNIQUE;
+
 @RequiredArgsConstructor
 @Component
 public class RouteHandler {
@@ -24,6 +26,7 @@ public class RouteHandler {
 	public void projectServiceRouteLocator(RouteLocatorBuilder.Builder builder) {
 		builder
 				.route("project-service", r -> r.path("/projects/**","/organizations/**", "/users/**", "/login")
+						.filters(f -> f.dedupeResponseHeader("Access-Control-Allow-Origin", RETAIN_UNIQUE.name()))
 						.uri(projectServicePath));
 	}
 }

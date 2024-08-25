@@ -10,6 +10,7 @@ import { Validator } from "../lib/form-validator";
 import router from "../routes/Router";
 import "../styles/LoginPage.css";
 import authService from "../services/authService";
+import userInformationService from "../services/userInformationService";
 
 export default function LoginPage() {
   const { form, setForm, isValid, setFocus } = useFormValidator(
@@ -40,9 +41,11 @@ export default function LoginPage() {
           setLoginRequestError("Failed to authenticate");
           console.error(error);
         });
-      console.log(response);
+      if (response) {
+        userInformationService.setUserPrincipal(response);
+        router.navigate("/");
+      }
     }
-    console.log("ok");
   };
 
   useEffect(() => {

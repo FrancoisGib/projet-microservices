@@ -9,14 +9,14 @@ import List from "@mui/material/List";
 import { NavBarItemType } from "../../interfaces/NavBarInterfaces";
 import { firstStringCharToUppercase } from "../../lib/functions";
 import { convertItemsInComponent } from "../../lib/NavBarFunctions";
-import { getUserOrganization } from "../../services/UserInformationService";
 import KubernetesIcon from "./KubeIcon";
+import userInformationService from "../../services/userInformationService";
 
 const items: NavBarItemType[] = [
   {
     title: "Organization",
     parentIcon: <CorporateFareIcon />,
-    navigateTo: `/${getUserOrganization()}`,
+    navigateTo: `/${userInformationService.getUserPrincipal()?.organizationId}`,
     children: [{ title: "Users", icon: <PeopleIcon />, navigateTo: "/users" }],
   },
   {
@@ -59,7 +59,9 @@ export default function NavBar() {
             id="nested-list-subheader"
             style={{ fontSize: "25px", textAlign: "center" }}
           >
-            {firstStringCharToUppercase(getUserOrganization())}
+            {firstStringCharToUppercase(
+              userInformationService.getUserPrincipal()?.organizationName ?? ""
+            )}
           </ListSubheader>
 
           <Divider />

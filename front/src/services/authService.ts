@@ -8,11 +8,7 @@ interface AuthRequest {
 
 const authService = {
   login: async ({ username, password }: AuthRequest): Promise<UserPrincipal> =>
-    axios.post<AuthRequest, UserPrincipal>(
-      "/login",
-      { username, password },
-      { withCredentials: true }
-    ),
+    axios.post<AuthRequest, UserPrincipal>("/login", { username, password }),
 };
 
 export default authService;

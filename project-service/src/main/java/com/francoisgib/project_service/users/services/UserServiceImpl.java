@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -61,6 +62,7 @@ public class UserServiceImpl implements UserService {
 			.username(userCreationForm.getUsername())
 			.organization(organization)
 			.password(passwordEncoder.encode(userCreationForm.getPassword()))
+			.projects(Collections.emptySet())
 			.build());
 	}
 

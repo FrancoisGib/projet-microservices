@@ -1,19 +1,19 @@
-#login-form .login-form-input {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 90%;
-}
-
 #login-form {
   border: 1px solid rgba(0, 0, 0, 0.21);
   border-radius: 12px;
   padding: 30px 20px;
   width: 30%;
-  height: 50vh;
+  height: 40vh;
   display: flex;
   min-width: 300px;
   min-height: 300px;
   flex-direction: column;
+}
+
+#login-form .login-form-input {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 90%;
 }
 
 #login-fields-container {
