@@ -26,7 +26,8 @@ public class RouteHandler {
 	public void projectServiceRouteLocator(RouteLocatorBuilder.Builder builder) {
 		builder
 				.route("project-service", r -> r.path("/projects/**","/organizations/**", "/users/**", "/login")
-						.filters(f -> f.dedupeResponseHeader("Access-Control-Allow-Origin", RETAIN_UNIQUE.name()))
+						.filters(f -> f.dedupeResponseHeader("Access-Control-Allow-Origin", RETAIN_UNIQUE.name())
+								.dedupeResponseHeader("Access-Control-Allow-Credentials", RETAIN_UNIQUE.name()))
 						.uri(projectServicePath));
 	}
 }

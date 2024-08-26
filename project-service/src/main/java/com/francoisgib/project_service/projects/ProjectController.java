@@ -2,13 +2,18 @@ package com.francoisgib.project_service.projects;
 
 import com.francoisgib.project_service.projects.models.ProjectCreationForm;
 import com.francoisgib.project_service.projects.models.ProjectDTO;
+import com.francoisgib.project_service.projects.permissions.models.ProjectPermissionEnum;
+import com.francoisgib.project_service.projects.permissions.ProjectPermissionMapper;
+import com.francoisgib.project_service.projects.permissions.models.ProjectPermissionDTO;
 import com.francoisgib.project_service.users.UserResourceException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,5 +35,16 @@ public class ProjectController {
     @GetMapping
     public ResponseEntity<List<ProjectDTO>> getAllProjects() {
         return ResponseEntity.ok(ProjectMapper.INSTANCE.toDTO(projectService.getAllProjects()));
+    }
+
+    @GetMapping("/permissions/{projectId}/{userId}")
+    public Set<ProjectPermissionDTO> getUserProjectPermissions(@PathVariable Long projectId, @PathVariable Long userId) throws UserResourceException {
+        return ProjectPermissionMapper.INSTANCE.toDTO(projectService.getUserProjectPermissionsByUserIdAndProjectId(userId, projectId));
+    }
+
+    @GetMapping("/permissions/access/{projectId}/{userId}")
+    public ResponseEntity<Void> userCanAccessProject(@PathVariable Long projectId, @PathVariable Long userId) throws UserResourceException {
+        HttpStatus status = projectService.userHasProjectPermission(userId, projectId, ProjectPermissionEnum.ACCESS) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+        return ResponseEntity.status(status).build();
     }
 }

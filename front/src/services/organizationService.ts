@@ -1,4 +1,4 @@
-import axios from "../../axios.config";
+import axios from "../axios.config";
 
 interface Organization {
   name: string;
@@ -6,7 +6,7 @@ interface Organization {
 
 const organizationService = {
   getUsers: async (): Promise<Organization[]> => {
-    const response = await axios.get<any[]>("/projects");
+    const response = await axios.get<Organization[]>("/organizations");
     return response.data;
   },
 };

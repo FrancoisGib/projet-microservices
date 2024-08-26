@@ -24,6 +24,5 @@ public class UserCreationForm {
 	@NotBlank
 	private String password;
 
-	@NotNull
-	private int organizationId;
+	private Integer organizationId;
 }

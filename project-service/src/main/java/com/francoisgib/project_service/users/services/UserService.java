@@ -13,7 +13,7 @@ public interface UserService {
 	User findByEmail(String email) throws UserResourceException;
 	User findByUsername(String username) throws UserResourceException;
 	User getUser(long id) throws UserResourceException;
-	User createUser(UserCreationForm userCreationForm);
+	User createUser(UserCreationForm userCreationForm) throws UserResourceException;
 	User updateUser(Long id, UserUpdateForm userUpdateForm) throws UserResourceException;
 	void deleteUser(long id) throws UserResourceException;
 }

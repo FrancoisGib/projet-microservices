@@ -4,6 +4,7 @@ import LoginPage from "../pages/LoginPage";
 import ProjectPage from "../pages/ProjectsPage";
 import SingleProjectPage from "../pages/SingleProjectPage";
 import ProtectedRoute from "./ProtectedRoute";
+import NavBarLayout from "../components/navbar/NavBarLayout";
 
 const router = createBrowserRouter([
   {
@@ -11,7 +12,11 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    element: <ProtectedRoute isAuthenticated={isAuthenticated()} />,
+    element: (
+      <NavBarLayout>
+        <ProtectedRoute isAuthenticated={isAuthenticated()} />
+      </NavBarLayout>
+    ),
     children: [
       {
         path: "/projects",

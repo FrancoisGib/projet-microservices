@@ -41,7 +41,7 @@ public class UserControllerImpl implements UserController {
 	}
 
 	@Override
-	public ResponseEntity<UserDTO> createUser(UserCreationForm userCreationForm) {
+	public ResponseEntity<UserDTO> createUser(UserCreationForm userCreationForm) throws UserResourceException {
 		return new ResponseEntity<>(UserMapper.INSTANCE.toDTO(userService.createUser(userCreationForm)), HttpStatus.CREATED);
 	}
 

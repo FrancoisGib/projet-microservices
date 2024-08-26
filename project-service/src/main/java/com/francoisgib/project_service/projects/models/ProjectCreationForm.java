@@ -22,6 +22,5 @@ public class ProjectCreationForm {
     @NotNull
     private ProjectScope scope;
 
-    @NotNull
-    private int organizationId;
+    private Integer organizationId;
 }

@@ -39,6 +39,9 @@ const items: NavBarItemType[] = [
   { title: "Projects", icon: <InboxIcon />, navigateTo: "/projects" },
 ];
 
+const organizationName =
+  userInformationService.getUserPrincipal()?.organizationName;
+
 export default function NavBar() {
   return (
     <div id="nav-bar-container">
@@ -59,9 +62,7 @@ export default function NavBar() {
             id="nested-list-subheader"
             style={{ fontSize: "25px", textAlign: "center" }}
           >
-            {firstStringCharToUppercase(
-              userInformationService.getUserPrincipal()?.organizationName ?? ""
-            )}
+            {firstStringCharToUppercase(organizationName || " ")}
           </ListSubheader>
 
           <Divider />

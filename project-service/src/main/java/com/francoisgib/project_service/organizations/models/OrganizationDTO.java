@@ -8,7 +8,7 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 public class OrganizationDTO {
-    private int id;
+    private Long id;
     private String name;
     private Set<Long> usersId;
     private Set<Long> projectsId;

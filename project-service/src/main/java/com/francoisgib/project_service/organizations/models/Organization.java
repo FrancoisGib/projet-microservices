@@ -1,6 +1,6 @@
 package com.francoisgib.project_service.organizations.models;
 
-import com.francoisgib.project_service.projects.Project;
+import com.francoisgib.project_service.projects.models.Project;
 import com.francoisgib.project_service.users.models.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.Set;
 public class Organization {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
 	@Column(nullable = false, unique = true)
 	private String name;

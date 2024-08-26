@@ -3,7 +3,7 @@ package com.francoisgib.project_service.organizations;
 import com.francoisgib.project_service.BaseMapper;
 import com.francoisgib.project_service.organizations.models.Organization;
 import com.francoisgib.project_service.organizations.models.OrganizationDTO;
-import com.francoisgib.project_service.projects.Project;
+import com.francoisgib.project_service.projects.models.Project;
 import com.francoisgib.project_service.users.models.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

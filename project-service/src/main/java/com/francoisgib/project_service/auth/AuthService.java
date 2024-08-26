@@ -32,7 +32,7 @@ public class AuthService {
         User user = userService.findByUsername(authRequest.username());
         if (!passwordEncoder.matches(authRequest.password(), user.getPassword())) {
             messageService.sendLogMessage("Wrong credentials for user : " + authRequest.username());
-            throw new UserResourceException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
+            throw new UserResourceException("Invalid username or password", HttpStatus.UNAUTHORIZED);
         }
 
         UserPrincipal principal = new UserPrincipal(
@@ -56,7 +56,7 @@ public class AuthService {
         return new LoginResponse(cookie, authResponse);
     }
 
-    public User register(UserCreationForm userCreationForm) {
+    public User register(UserCreationForm userCreationForm) throws UserResourceException {
         return userService.createUser(userCreationForm);
     }
 }

@@ -33,7 +33,7 @@ public interface UserController {
 	ResponseEntity<UserDTO> getUserById(@PathVariable long id) throws UserResourceException;
 
 	@PostMapping
-	ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserCreationForm userCreationForm);
+	ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserCreationForm userCreationForm) throws UserResourceException;
 
 	@PutMapping("/{id}")
 	ResponseEntity<UserDTO> updateUser(@Valid @PathVariable long id, @RequestBody UserUpdateForm userUpdateForm) throws UserResourceException;

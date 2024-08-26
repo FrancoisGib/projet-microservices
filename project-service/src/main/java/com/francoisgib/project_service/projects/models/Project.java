@@ -1,7 +1,6 @@
-package com.francoisgib.project_service.projects;
+package com.francoisgib.project_service.projects.models;
 
 import com.francoisgib.project_service.organizations.models.Organization;
-import com.francoisgib.project_service.projects.models.ProjectScope;
 import com.francoisgib.project_service.users.models.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,7 +19,7 @@ import java.util.Set;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -28,11 +27,7 @@ public class Project {
     @Column(nullable = false)
     private ProjectScope scope;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_project",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "projects")
     private Set<User> users;
 
     @ManyToOne

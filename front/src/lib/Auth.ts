@@ -1,1 +1,4 @@
-export const isAuthenticated = (): boolean => false;
+import userInformationService from "../services/userInformationService";
+
+export const isAuthenticated = (): boolean =>
+  userInformationService.getUserPrincipal() !== null;

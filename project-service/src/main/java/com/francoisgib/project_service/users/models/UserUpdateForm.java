@@ -16,5 +16,5 @@ public class UserUpdateForm {
 	@NotBlank
 	private String password;
 
-	private int organizationId;
+	private Integer organizationId;
 }

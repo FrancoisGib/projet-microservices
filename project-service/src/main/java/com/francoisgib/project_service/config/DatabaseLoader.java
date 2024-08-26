@@ -1,83 +1,61 @@
 package com.francoisgib.project_service.config;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.francoisgib.project_service.organizations.OrganizationService;
+import com.francoisgib.project_service.organizations.models.Organization;
+import com.francoisgib.project_service.organizations.models.OrganizationCreationForm;
+import com.francoisgib.project_service.projects.ProjectService;
+import com.francoisgib.project_service.projects.models.ProjectCreationForm;
+import com.francoisgib.project_service.projects.models.ProjectScope;
+import com.francoisgib.project_service.users.models.User;
+import com.francoisgib.project_service.users.models.UserCreationForm;
+import com.francoisgib.project_service.users.services.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
-@Slf4j
 @Component
+@Order(2)
 public class DatabaseLoader implements CommandLineRunner {
-    @Override
-    public void run(String... args) {
+    private final OrganizationService organizationService;
 
-    }
+    private final UserService userService;
 
-    /*private final RoleRepository roleRepository;
-
-    private final PermissionRepository permissionRepository;
-
-    private Role userRole;
-
-    private Role adminRole;
-
-    private List<Role> databaseRoles;
-
-    private List<Permission> databasePermissions;
-
-    private final Set<Permission> newPermissions = new HashSet<>();
-
-    private boolean updated = false;
+    private final ProjectService projectService;
 
     @Override
-    public void run(String... args) {
-        databaseRoles = roleRepository.findAll();
-        databasePermissions = permissionRepository.findAll();
+    public void run(String... args) throws Exception {
+        Organization organization = organizationService.createOrganization(new OrganizationCreationForm("Organization"));
 
-        userRole = findRoleIfExists("USER");
-        adminRole = findRoleIfExists("ADMIN");
+        User user = userService.createUser(new UserCreationForm(
+                "username",
+                "user@user.com",
+                "Password1!",
+                organization.getId()));
 
-        addUserPermissions();
-        if (updated) {
-            log.info("Roles updated");
-            permissionRepository.saveAll(newPermissions);
-            roleRepository.saveAll(Set.of(userRole, adminRole));
-        }
+        projectService.createProject(new ProjectCreationForm(
+                user.getId(),
+                "Project1",
+                ProjectScope.PRIVATE,
+                organization.getId()));
+
+        projectService.createProject(new ProjectCreationForm(
+                user.getId(),
+                "Project2",
+                ProjectScope.PRIVATE,
+                organization.getId()));
+
+        projectService.createProject(new ProjectCreationForm(
+                user.getId(),
+                "Project3",
+                ProjectScope.PRIVATE,
+                organization.getId()));
+
+        projectService.createProject(new ProjectCreationForm(
+                user.getId(),
+                "Project4",
+                ProjectScope.PRIVATE,
+                organization.getId()));
     }
-
-    public Role findRoleIfExists(String name) {
-        return databaseRoles.stream().filter(role -> role.getName().equals(name)).findAny().orElseGet(() -> {
-            log.info("Creating new role {}", name);
-            return new Role(name);
-        });
-    }
-
-    public void addAllPermissions(Set<Permission> permissions) {
-        for (Permission permission : permissions) {
-            if (databasePermissions.stream()
-                    .noneMatch(databasePermission -> databasePermission
-                            .getName()
-                            .equals(permission.getName()))
-            ) {
-                newPermissions.add(permission);
-                for (Role role : permission.getRoles()) {
-                    log.info("Adding new permission {} to role {}", permission.getName(), role.getName());
-                    role.addPermission(permission);
-                }
-                updated = true;
-            }
-        }
-    }
-
-    public void addUserPermissions() {
-        final Set<Permission> permissions = Set.of(
-                new Permission("user:read", Set.of(userRole)),
-                new Permission("admin:read", Set.of(adminRole))
-        );
-        addAllPermissions(permissions);
-    }*/
 }

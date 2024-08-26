@@ -1,6 +1,7 @@
 package com.francoisgib.project_service.projects;
 
 import com.francoisgib.project_service.BaseMapper;
+import com.francoisgib.project_service.projects.models.Project;
 import com.francoisgib.project_service.projects.models.ProjectDTO;
 import com.francoisgib.project_service.users.models.User;
 import org.mapstruct.Mapper;

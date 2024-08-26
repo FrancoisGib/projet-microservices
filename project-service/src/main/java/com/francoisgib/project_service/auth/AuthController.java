@@ -1,6 +1,5 @@
 package com.francoisgib.project_service.auth;
 
-import com.francoisgib.project_service.jwt.JwtResponse;
 import com.francoisgib.project_service.users.UserMapper;
 import com.francoisgib.project_service.users.UserResourceException;
 import com.francoisgib.project_service.users.models.UserCreationForm;
@@ -26,7 +25,7 @@ public class AuthController {
     }
 
     @PutMapping("/register")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserCreationForm userCreationForm) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserCreationForm userCreationForm) throws UserResourceException {
         return new ResponseEntity<>(UserMapper.INSTANCE.toDTO(authService.register(userCreationForm)), HttpStatus.CREATED);
     }
 }

@@ -36,39 +36,46 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByEmail(String email) throws UserResourceException {
 		messageService.sendLogMessage("Retrieving user with email: " + email);
-		return userRepository.findByEmail(email).orElseThrow(() -> new UserResourceException(HttpStatus.NOT_FOUND, "User with email " + email + " not found"));
+		return userRepository.findByEmail(email).orElseThrow(() -> new UserResourceException("User with email " + email + " not found", HttpStatus.NOT_FOUND));
 	}
 
 	@Override
 	public User getUser(long id) throws UserResourceException {
 		messageService.sendLogMessage("Retrieving user with id: " + id);
-		return userRepository.findById(id).orElseThrow(() -> new UserResourceException(HttpStatus.NOT_FOUND, "User with id " + id + " not found"));
+		return userRepository.findById(id).orElseThrow(() -> new UserResourceException("User with id " + id + " not found", HttpStatus.NOT_FOUND));
 	}
 
 	@Override
 	public User findByUsername(String username) throws UserResourceException {
 		messageService.sendLogMessage("Retrieving user with username: " + username);
 		return userRepository.findByUsername(username)
-			.orElseThrow(() -> new UserResourceException(HttpStatus.NOT_FOUND, "User with username " + username + " not found"));
+			.orElseThrow(() -> new UserResourceException("User with username " + username + " not found", HttpStatus.NOT_FOUND));
 	}
 
 	@Override
-	public User createUser(UserCreationForm userCreationForm) {
+	public User createUser(UserCreationForm userCreationForm) throws UserResourceException {
 		messageService.sendLogMessage("Creating user : " + userCreationForm.getUsername());
-		Organization organization = organizationService.getOrganizationById(userCreationForm.getOrganizationId());
-
-		return userRepository.save(User.builder()
-			.email(userCreationForm.getEmail())
-			.username(userCreationForm.getUsername())
-			.organization(organization)
-			.password(passwordEncoder.encode(userCreationForm.getPassword()))
-			.projects(Collections.emptySet())
-			.build());
+		Organization organization = null;
+		if (userCreationForm.getOrganizationId() != null) {
+			organization = organizationService.getOrganizationById(userCreationForm.getOrganizationId());
+		}
+		try {
+			return userRepository.save(User.builder()
+					.email(userCreationForm.getEmail())
+					.username(userCreationForm.getUsername())
+					.organization(organization)
+					.password(passwordEncoder.encode(userCreationForm.getPassword()))
+					.projects(Collections.emptySet())
+					.build());
+		}
+		catch (Exception e) {
+			throw new UserResourceException("User already exists", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@Override
 	public User updateUser(Long id, UserUpdateForm userUpdateForm) throws UserResourceException {
-		User user = userRepository.findById(id).orElseThrow(() -> new UserResourceException(HttpStatus.NOT_FOUND, "User with id " + id + " not found"));
+		User user = userRepository.findById(id).orElseThrow(() -> new UserResourceException("User with id " + id + " not found", HttpStatus.NOT_FOUND));
 		boolean update = false;
 		if (userUpdateForm.getEmail() != null && !user.getEmail().equals(userUpdateForm.getEmail())) {
 			user.setEmail(userUpdateForm.getEmail());
@@ -82,7 +89,7 @@ public class UserServiceImpl implements UserService {
 			user.setPassword(passwordEncoder.encode(userUpdateForm.getPassword()));
 			update = true;
 		}
-		if (!(user.getOrganization().getId() == userUpdateForm.getOrganizationId())) {
+		if (!(user.getOrganization().getId().equals(userUpdateForm.getOrganizationId()))) {
 			Organization organization = organizationService.getOrganizationById(userUpdateForm.getOrganizationId());
 			user.setOrganization(organization);
 			update = true;
