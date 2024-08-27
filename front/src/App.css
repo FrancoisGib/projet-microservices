@@ -1,4 +1,17 @@
+.overlined {
+  text-decoration: none;
+}
+
+.overlined:hover {
+  text-decoration: underline;
+}
+
 a {
   text-decoration: none;
   color: black;
+}
+
+.overlined:visited {
+  background-color: transparent;
+  text-decoration: none;
 }

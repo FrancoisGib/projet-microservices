@@ -25,7 +25,11 @@ public class Project {
     private String name;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ProjectScope scope;
+
+    @Column(nullable = false)
+    private String description;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "projects")
     private Set<User> users;

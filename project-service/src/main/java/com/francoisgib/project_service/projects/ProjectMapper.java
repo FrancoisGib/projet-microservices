@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,8 +19,12 @@ public interface ProjectMapper extends BaseMapper<Project, ProjectDTO> {
 
     @Override
     @Mapping(target = "usersId", source = "users", qualifiedByName = "mapUsersId")
-    @Mapping(target = "organizationId", source = "organization.id")
+    @Mapping(target = "organization", source = "organization.name")
     ProjectDTO toDTO(Project object);
+
+    default Page<ProjectDTO> toDTO(Page<Project> projects) {
+        return projects.map(this::toDTO);
+    }
 
     @Named("mapUsersId")
     default Set<Long> mapUsersId(Set<User> users) {

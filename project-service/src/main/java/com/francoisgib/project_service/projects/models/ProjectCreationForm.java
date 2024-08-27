@@ -1,5 +1,7 @@
 package com.francoisgib.project_service.projects.models;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -21,6 +23,10 @@ public class ProjectCreationForm {
 
     @NotNull
     private ProjectScope scope;
+
+    @NotNull
+    @NotBlank
+    private String description;
 
     private Integer organizationId;
 }

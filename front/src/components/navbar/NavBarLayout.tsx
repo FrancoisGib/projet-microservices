@@ -6,9 +6,7 @@ export default function NavBarLayout({ children }: { children: ReactNode }) {
   return (
     <div id="nav-bar-layout">
       <NavBar />
-      <div id="page-container" style={{ width: "85vw" }}>
-        {children}
-      </div>
+      {children}
     </div>
   );
 }

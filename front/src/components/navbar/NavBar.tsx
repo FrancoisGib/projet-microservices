@@ -16,7 +16,9 @@ const items: NavBarItemType[] = [
   {
     title: "Organization",
     parentIcon: <CorporateFareIcon />,
-    navigateTo: `/${userInformationService.getUserPrincipal()?.organizationId}`,
+    navigateTo: `/${userInformationService
+      .getUserPrincipal()
+      ?.organizationName?.toLowerCase()}`,
     children: [{ title: "Users", icon: <PeopleIcon />, navigateTo: "/users" }],
   },
   {
@@ -40,7 +42,7 @@ const items: NavBarItemType[] = [
 ];
 
 const organizationName =
-  userInformationService.getUserPrincipal()?.organizationName;
+  userInformationService.getUserPrincipal()?.organizationName ?? " ";
 
 export default function NavBar() {
   return (
@@ -50,23 +52,29 @@ export default function NavBar() {
         sx={{
           [`& .MuiDrawer-paper`]: {
             height: "100vh",
-            width: "15vw",
+            width: "14vw",
             minWidth: "240px",
             position: "relative",
           },
         }}
       >
-        <List>
+        <List sx={{ paddingTop: "4px" }}>
           <ListSubheader
             component="div"
             id="nested-list-subheader"
-            style={{ fontSize: "25px", textAlign: "center" }}
+            style={{
+              fontSize: "25px",
+              textAlign: "center",
+              backgroundColor: "#0078d4",
+              color: "white",
+              fontWeight: "light",
+              fontFamily:
+                "az_ea_font, Segoe UI, az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif",
+            }}
           >
-            {firstStringCharToUppercase(organizationName || " ")}
+            {firstStringCharToUppercase(organizationName)}
           </ListSubheader>
-
           <Divider />
-
           {convertItemsInComponent(items)}
         </List>
       </Drawer>

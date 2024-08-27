@@ -21,7 +21,7 @@ export default function NavBarItem({
   return (
     <Link to={navigateTo}>
       <ListItem key={title} disablePadding>
-        <ListItemButton sx={{ pl: padding ? 4 : 2 }}>
+        <ListItemButton sx={{ pl: padding ? 4 : 2, height: "49px" }}>
           <ListItemIcon>{icon}</ListItemIcon>
           <ListItemText primary={title} />
         </ListItemButton>

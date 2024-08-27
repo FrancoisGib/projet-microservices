@@ -34,28 +34,34 @@ public class DatabaseLoader implements CommandLineRunner {
                 "Password1!",
                 organization.getId()));
 
-        projectService.createProject(new ProjectCreationForm(
-                user.getId(),
-                "Project1",
-                ProjectScope.PRIVATE,
-                organization.getId()));
+        for (int i = 0; i < 4; i++) {
+            projectService.createProject(new ProjectCreationForm(
+                    user.getId(),
+                    "Premier projet",
+                    ProjectScope.PRIVATE,
+                    "Première description du project",
+                    organization.getId()));
 
-        projectService.createProject(new ProjectCreationForm(
-                user.getId(),
-                "Project2",
-                ProjectScope.PRIVATE,
-                organization.getId()));
+            projectService.createProject(new ProjectCreationForm(
+                    user.getId(),
+                    "Deuxième projet",
+                    ProjectScope.PRIVATE,
+                    "Deuxième description du project",
+                    organization.getId()));
 
-        projectService.createProject(new ProjectCreationForm(
-                user.getId(),
-                "Project3",
-                ProjectScope.PRIVATE,
-                organization.getId()));
+            projectService.createProject(new ProjectCreationForm(
+                    user.getId(),
+                    "Troisième projet",
+                    ProjectScope.PRIVATE,
+                    "Troisième description du project",
+                    organization.getId()));
 
-        projectService.createProject(new ProjectCreationForm(
-                user.getId(),
-                "Project4",
-                ProjectScope.PRIVATE,
-                organization.getId()));
+            projectService.createProject(new ProjectCreationForm(
+                    user.getId(),
+                    "Quatrième projet",
+                    ProjectScope.PRIVATE,
+                    "Quatrième description du project",
+                    organization.getId()));
+        }
     }
 }

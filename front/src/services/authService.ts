@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import axios from "../axios.config";
 import UserPrincipal from "../interfaces/UserPrincipal";
 
@@ -7,8 +8,11 @@ interface AuthRequest {
 }
 
 const authService = {
-  login: async ({ username, password }: AuthRequest): Promise<UserPrincipal> =>
-    axios.post<AuthRequest, UserPrincipal>("/login", { username, password }),
+  login: async ({
+    username,
+    password,
+  }: AuthRequest): Promise<AxiosResponse<UserPrincipal>> =>
+    axios.post<UserPrincipal>("/login", { username, password }),
 };
 
 export default authService;

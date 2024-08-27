@@ -11,6 +11,8 @@ import router from "../routes/Router";
 import "../styles/LoginPage.css";
 import authService from "../services/authService";
 import userInformationService from "../services/userInformationService";
+import { AxiosResponse } from "axios";
+import UserPrincipal from "../interfaces/UserPrincipal";
 
 export default function LoginPage() {
   const { form, setForm, isValid, setFocus } = useFormValidator(
@@ -32,19 +34,19 @@ export default function LoginPage() {
 
   const handleSubmit = async () => {
     if (isValid) {
-      const response = await authService
+      await authService
         .login({
           username: form["username"].value,
           password: form["password"].value,
+        })
+        .then((response) => {
+          userInformationService.setUserPrincipal(response.data);
+          router.navigate("/");
         })
         .catch((error) => {
           setLoginRequestError("Failed to authenticate");
           console.error(error);
         });
-      if (response) {
-        userInformationService.setUserPrincipal(response);
-        router.navigate("/");
-      }
     }
   };
 
@@ -59,6 +61,7 @@ export default function LoginPage() {
       <form
         id="login-form"
         style={{ backgroundColor: loginRequestError ?? "red" }}
+        autoComplete="on"
       >
         <h2 id="login-form-title">Login</h2>
         <div id="login-fields-container">

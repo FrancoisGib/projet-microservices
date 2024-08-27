@@ -1,28 +1,50 @@
 import { useQuery } from "react-query";
 import projectService from "../services/projectService";
 
-import Grid from "@mui/material/Grid";
-import Skeleton from "@mui/material/Skeleton";
-import { Box } from "@mui/material";
+import { useState } from "react";
+import ProjectsTable from "../components/projects/ProjectsTable";
+import SearchBar from "../components/SearchBar";
 
 export default function ProjectsPage() {
-  const { data, isLoading, isError } = useQuery(["projects"], () =>
-    projectService.getProjects()
+  const [searchField, setSearchField] = useState("");
+  const [fetchState, setFetchState] = useState("");
+  const [pageNumber, setPageNumber] = useState(0);
+
+  const {
+    data: projects,
+    isLoading,
+    isError,
+  } = useQuery(
+    ["projects", fetchState, pageNumber],
+    () =>
+      projectService.getProjectsStartingWithNamePaginated(
+        fetchState,
+        pageNumber
+      ),
+    { retryOnMount: false, staleTime: 60000 }
   );
 
   return (
-    <>
-      <p>{JSON.stringify(data)}</p>
-      <Grid container wrap="nowrap" display="flex" justifyContent="center">
-        {!isLoading
-          ? Array.from(new Array(3)).map(() => (
-              <Box margin="10px">
-                <Skeleton variant="rounded" width={500} height={300} />
-              </Box>
-            ))
-          : null}
-      </Grid>
-      <Box bgcolor="black" width="200px" height="100px"></Box>
-    </>
+    <div className="flex justify-center w-full">
+      <div id="page-container" className="w-[90%] my-8">
+        {(isLoading && <div>Loading...</div>) ||
+          (isError && <div>Error: Unable to fetch data</div>) || (
+            <>
+              <SearchBar
+                setSearchField={setSearchField}
+                searchField={searchField}
+                setFetchState={setFetchState}
+              />
+              {projects && (
+                <ProjectsTable
+                  projects={projects}
+                  pageNumber={pageNumber}
+                  setPageNumber={setPageNumber}
+                />
+              )}
+            </>
+          )}
+      </div>
+    </div>
   );
 }

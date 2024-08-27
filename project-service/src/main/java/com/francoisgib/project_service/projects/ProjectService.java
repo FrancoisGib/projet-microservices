@@ -5,18 +5,23 @@ import com.francoisgib.project_service.organizations.models.Organization;
 import com.francoisgib.project_service.projects.models.Project;
 import com.francoisgib.project_service.projects.models.ProjectCreationForm;
 import com.francoisgib.project_service.projects.permissions.ProjectPermissionRepository;
-import com.francoisgib.project_service.projects.permissions.models.*;
 import com.francoisgib.project_service.projects.permissions.UserProjectRepository;
+import com.francoisgib.project_service.projects.permissions.models.ProjectPermission;
+import com.francoisgib.project_service.projects.permissions.models.ProjectPermissionEnum;
+import com.francoisgib.project_service.projects.permissions.models.UserProject;
+import com.francoisgib.project_service.projects.permissions.models.UserProjectId;
 import com.francoisgib.project_service.users.UserResourceException;
 import com.francoisgib.project_service.users.models.User;
 import com.francoisgib.project_service.users.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -47,6 +52,7 @@ public class ProjectService {
                 .organization(organization)
                 .scope(projectCreationForm.getScope())
                 .name(projectCreationForm.getName())
+                .description(projectCreationForm.getDescription())
                 .build();
 
         Project project = projectRepository.save(newProject);
@@ -73,6 +79,10 @@ public class ProjectService {
 
     public Set<ProjectPermission> getUserPermissionsByUserAndProject(User user, Project project) {
         return userProjectRepository.findById(new UserProjectId(user, project)).orElseThrow().getProjectPermissions();
+    }
+
+    public Page<Project> getAllProjectStartingWithName(String name, int pageNumber) {
+        return projectRepository.findAllByNameStartingWithLowerName(name, PageRequest.of(pageNumber, 10));
     }
 
     public boolean userCanAccessProject(Long userId, Long projectId) throws UserResourceException {

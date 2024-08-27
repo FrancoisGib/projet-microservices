@@ -9,7 +9,9 @@ import java.util.Set;
 @AllArgsConstructor
 public class ProjectDTO {
     private Long id;
-    private int organizationId;
+    private String organization;
     private String name;
+    private String description;
     private Set<Long> usersId;
+    private ProjectScope scope;
 }
