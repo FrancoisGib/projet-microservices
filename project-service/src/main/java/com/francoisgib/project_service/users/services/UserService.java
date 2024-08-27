@@ -1,11 +1,15 @@
 package com.francoisgib.project_service.users.services;
 
+import com.francoisgib.project_service.ArtificialPage;
+import com.francoisgib.project_service.projects.models.ProjectDTO;
 import com.francoisgib.project_service.users.UserResourceException;
 import com.francoisgib.project_service.users.models.User;
 import com.francoisgib.project_service.users.models.UserCreationForm;
 import com.francoisgib.project_service.users.models.UserUpdateForm;
-import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface UserService {
@@ -16,4 +20,5 @@ public interface UserService {
 	User createUser(UserCreationForm userCreationForm) throws UserResourceException;
 	User updateUser(Long id, UserUpdateForm userUpdateForm) throws UserResourceException;
 	void deleteUser(long id) throws UserResourceException;
+	ArtificialPage<ProjectDTO> getUserProjectsWithPagination(long userId, String filterName, int pageNumber);
 }

@@ -41,13 +41,13 @@ export default function ProjectsTable({
         <TableBody>
           {projects.content.map((project) => (
             <TableRow
+              className="cursor-pointer"
               sx={{
                 "&:last-child td, &:last-child th": { border: 0 },
                 "&.Mui-selected": { backgroundColor: "white" },
               }}
               key={project.id}
               selected
-              component="div"
               onClick={() => router.navigate(`/projects/${project.id}`)}
             >
               <TableCell align="center" component="th" scope="row">
@@ -58,7 +58,7 @@ export default function ProjectsTable({
               <TableCell align="center">
                 {project.organization ?? "None"}
               </TableCell>
-              <TableCell align="center">{project.usersId.length}</TableCell>
+              <TableCell align="center">{project.users.length}</TableCell>
               <TableCell align="center">{project.scope}</TableCell>
             </TableRow>
           ))}

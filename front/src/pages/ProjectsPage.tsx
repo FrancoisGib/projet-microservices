@@ -17,7 +17,7 @@ export default function ProjectsPage() {
   } = useQuery(
     ["projects", fetchState, pageNumber],
     () =>
-      projectService.getProjectsStartingWithNamePaginated(
+      projectService.getUserProjectsStartingWithNamePaginated(
         fetchState,
         pageNumber
       ),

@@ -1,21 +1,18 @@
 package com.francoisgib.project_service.users.controllers;
 
+import com.francoisgib.project_service.ArtificialPage;
 import com.francoisgib.project_service.ResponseObject;
+import com.francoisgib.project_service.projects.models.ProjectDTO;
 import com.francoisgib.project_service.users.UserResourceException;
 import com.francoisgib.project_service.users.models.UserCreationForm;
 import com.francoisgib.project_service.users.models.UserDTO;
 import com.francoisgib.project_service.users.models.UserUpdateForm;
 import jakarta.validation.Valid;
-import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -40,4 +37,7 @@ public interface UserController {
 
 	@DeleteMapping("/{id}")
 	ResponseEntity<ResponseObject> deleteUser(@PathVariable long id) throws UserResourceException;
+
+	@GetMapping("/projects")
+	ArtificialPage<ProjectDTO> getUserProjectsWithPaginationAndStartsWithName(@RequestParam long userId, @RequestParam String filterName, @RequestParam int pageNumber);
 }

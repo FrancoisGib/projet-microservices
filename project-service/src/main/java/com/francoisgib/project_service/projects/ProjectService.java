@@ -14,9 +14,6 @@ import com.francoisgib.project_service.users.UserResourceException;
 import com.francoisgib.project_service.users.models.User;
 import com.francoisgib.project_service.users.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -79,10 +76,6 @@ public class ProjectService {
 
     public Set<ProjectPermission> getUserPermissionsByUserAndProject(User user, Project project) {
         return userProjectRepository.findById(new UserProjectId(user, project)).orElseThrow().getProjectPermissions();
-    }
-
-    public Page<Project> getAllProjectStartingWithName(String name, int pageNumber) {
-        return projectRepository.findAllByNameStartingWithLowerName(name, PageRequest.of(pageNumber, 10));
     }
 
     public boolean userCanAccessProject(Long userId, Long projectId) throws UserResourceException {

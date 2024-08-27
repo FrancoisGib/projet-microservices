@@ -1,5 +1,5 @@
 export default interface UserPrincipal {
-  userId: bigint;
+  id: bigint;
   username: string;
   organizationId?: number;
   organizationName?: string;

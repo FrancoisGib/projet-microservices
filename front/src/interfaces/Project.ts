@@ -2,7 +2,7 @@ export default interface Project {
   id: number;
   name: string;
   organization?: string;
-  usersId: bigint[];
+  users: any[];
   scope: string;
   description: string;
 }

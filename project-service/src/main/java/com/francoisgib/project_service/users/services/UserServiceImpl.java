@@ -1,14 +1,22 @@
 package com.francoisgib.project_service.users.services;
 
+import com.francoisgib.project_service.ArtificialPage;
 import com.francoisgib.project_service.MessageService;
 import com.francoisgib.project_service.organizations.OrganizationService;
 import com.francoisgib.project_service.organizations.models.Organization;
+import com.francoisgib.project_service.projects.ProjectMapper;
+import com.francoisgib.project_service.projects.models.Project;
+import com.francoisgib.project_service.projects.models.ProjectDTO;
 import com.francoisgib.project_service.users.UserRepository;
 import com.francoisgib.project_service.users.UserResourceException;
 import com.francoisgib.project_service.users.models.User;
 import com.francoisgib.project_service.users.models.UserCreationForm;
 import com.francoisgib.project_service.users.models.UserUpdateForm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -106,5 +114,11 @@ public class UserServiceImpl implements UserService {
 	public void deleteUser(long id) {
 		messageService.sendLogMessage("Deleting user with id : " + id);
 		userRepository.deleteById(id);
+	}
+
+	@Override
+	public ArtificialPage<ProjectDTO>  getUserProjectsWithPagination(long userId, String filterName, int pageNumber) {
+		List<Project> projects = userRepository.findById(userId).orElseThrow().getProjects().stream().filter((project) -> project.getName().startsWith(filterName)).toList();
+		return new ArtificialPage<>(ProjectMapper.INSTANCE.toDTO(projects), pageNumber, 10);
 	}
 }

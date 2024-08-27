@@ -1,5 +1,6 @@
 package com.francoisgib.project_service.projects.models;
 
+import com.francoisgib.project_service.users.models.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,6 +13,6 @@ public class ProjectDTO {
     private String organization;
     private String name;
     private String description;
-    private Set<Long> usersId;
+    private Set<UserDTO> users;
     private ProjectScope scope;
 }

@@ -8,7 +8,6 @@ import com.francoisgib.project_service.projects.permissions.models.ProjectPermis
 import com.francoisgib.project_service.users.UserResourceException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,10 +46,5 @@ public class ProjectController {
     public ResponseEntity<Void> userCanAccessProject(@PathVariable Long projectId, @PathVariable Long userId) throws UserResourceException {
         HttpStatus status = projectService.userHasProjectPermission(userId, projectId, ProjectPermissionEnum.ACCESS) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
         return ResponseEntity.status(status).build();
-    }
-
-    @GetMapping("/like")
-    public ResponseEntity<Page<ProjectDTO>> getAllProjectStartingWithName(@RequestParam String name, @RequestParam("page") int pageNumber) {
-        return ResponseEntity.ok(ProjectMapper.INSTANCE.toDTO(projectService.getAllProjectStartingWithName(name, pageNumber)));
     }
 }
