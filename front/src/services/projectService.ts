@@ -15,8 +15,13 @@ const projectService = {
   ): Promise<Page<Project>> => {
     const userId = userInformationService.getUserPrincipal()?.id;
     const response = await axios.get<Page<Project>>(
-      `/users/projects?userId=${userId}&pageNumber=${pageNumber}&filterName=${name}`
+      `/projects/users?userId=${userId}&pageNumber=${pageNumber}&nameFilter=${name}`
     );
+    return response.data;
+  },
+
+  getProjectById: async (projectId: number): Promise<Project> => {
+    const response = await axios.get<Project>(`/projects/${projectId}`);
     return response.data;
   },
 };

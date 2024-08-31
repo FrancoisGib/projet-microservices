@@ -48,7 +48,11 @@ export default function ProjectsTable({
               }}
               key={project.id}
               selected
-              onClick={() => router.navigate(`/projects/${project.id}`)}
+              onClick={() =>
+                router.navigate(`/projects/${project.id}`, {
+                  state: { ...project },
+                })
+              }
             >
               <TableCell align="center" component="th" scope="row">
                 {project.id}

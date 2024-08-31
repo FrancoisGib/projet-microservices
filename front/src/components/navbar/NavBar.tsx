@@ -7,10 +7,10 @@ import { Divider, ListSubheader } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import { NavBarItemType } from "../../interfaces/NavBarInterfaces";
-import { firstStringCharToUppercase } from "../../lib/functions";
 import { convertItemsInComponent } from "../../lib/NavBarFunctions";
-import KubernetesIcon from "./KubeIcon";
 import userInformationService from "../../services/userInformationService";
+import { LowercasedTextExceptFirstLetter } from "../styled-components";
+import KubernetesIcon from "./KubeIcon";
 
 const items: NavBarItemType[] = [
   {
@@ -72,7 +72,9 @@ export default function NavBar() {
                 "az_ea_font, Segoe UI, az_font, system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif",
             }}
           >
-            {firstStringCharToUppercase(organizationName)}
+            <LowercasedTextExceptFirstLetter>
+              {organizationName}
+            </LowercasedTextExceptFirstLetter>
           </ListSubheader>
           <Divider />
           {convertItemsInComponent(items)}
