@@ -1,4 +1,4 @@
-package com.francoisgib.project_service.projects.permissions.models;
+package com.francoisgib.project_service.projects.user_project;
 
 import com.francoisgib.project_service.projects.models.Project;
 import com.francoisgib.project_service.users.models.User;

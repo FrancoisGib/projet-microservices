@@ -5,15 +5,17 @@ import com.francoisgib.project_service.organizations.models.Organization;
 import com.francoisgib.project_service.projects.models.Project;
 import com.francoisgib.project_service.projects.models.ProjectCreationForm;
 import com.francoisgib.project_service.projects.permissions.ProjectPermissionRepository;
-import com.francoisgib.project_service.projects.permissions.UserProjectRepository;
 import com.francoisgib.project_service.projects.permissions.models.ProjectPermission;
 import com.francoisgib.project_service.projects.permissions.models.ProjectPermissionEnum;
-import com.francoisgib.project_service.projects.permissions.models.UserProject;
-import com.francoisgib.project_service.projects.permissions.models.UserProjectId;
+import com.francoisgib.project_service.projects.user_project.UserProject;
+import com.francoisgib.project_service.projects.user_project.UserProjectId;
+import com.francoisgib.project_service.projects.user_project.UserProjectRepository;
 import com.francoisgib.project_service.users.UserResourceException;
 import com.francoisgib.project_service.users.models.User;
 import com.francoisgib.project_service.users.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -109,5 +111,10 @@ public class ProjectService {
 
     private boolean projectPrivateAndUserInProject(Project project, Long userId) {
         return project.getUsers().stream().anyMatch(user -> user.getId().equals(userId));
+    }
+
+    public Page<Project> getUserProjectsWithPagination(long userId, String nameFilter, int pageNumber) {
+        return projectRepository.findUserProjectsStartingWithName(
+                userId, nameFilter, PageRequest.of(pageNumber, 10));
     }
 }

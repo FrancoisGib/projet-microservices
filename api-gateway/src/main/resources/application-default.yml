@@ -1,6 +1,7 @@
 config:
   paths:
     project-service: http://localhost:8081
+    kube-service: http://localhost:8082
 
 eureka:
   client:

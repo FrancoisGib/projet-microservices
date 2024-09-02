@@ -9,7 +9,9 @@ public interface BaseMapper<T, DTO> {
     DTO toDTO(T object);
     List<DTO> toDTO(List<T> objects);
     Set<DTO> toDTO(Set<T> objects);
-    default Page<DTO> toDTO(Page<T> objects) {
-        return objects.map(this::toDTO);
+
+    default PageDTO<DTO> toDTO(Page<T> objects) {
+        Page<DTO> page = objects.map(this::toDTO);
+        return new PageDTO<>(page.getTotalPages(), page.getTotalElements(), page.getContent());
     }
 }

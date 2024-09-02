@@ -2,7 +2,6 @@ package com.francoisgib.project_service.users.models;
 
 import com.francoisgib.project_service.organizations.models.Organization;
 import com.francoisgib.project_service.projects.models.Project;
-import com.francoisgib.project_service.projects.permissions.models.UserProject;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;

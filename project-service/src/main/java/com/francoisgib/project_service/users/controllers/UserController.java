@@ -3,6 +3,7 @@ package com.francoisgib.project_service.users.controllers;
 import com.francoisgib.project_service.ArtificialPage;
 import com.francoisgib.project_service.ResponseObject;
 import com.francoisgib.project_service.projects.models.ProjectDTO;
+import com.francoisgib.project_service.projects.user_project.UserProject;
 import com.francoisgib.project_service.users.UserResourceException;
 import com.francoisgib.project_service.users.models.UserCreationForm;
 import com.francoisgib.project_service.users.models.UserDTO;
@@ -37,7 +38,4 @@ public interface UserController {
 
 	@DeleteMapping("/{id}")
 	ResponseEntity<ResponseObject> deleteUser(@PathVariable long id) throws UserResourceException;
-
-	@GetMapping("/projects")
-	ArtificialPage<ProjectDTO> getUserProjectsWithPaginationAndStartsWithName(@RequestParam long userId, @RequestParam String filterName, @RequestParam int pageNumber);
 }

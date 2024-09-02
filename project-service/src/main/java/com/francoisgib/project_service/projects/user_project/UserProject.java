@@ -1,5 +1,6 @@
-package com.francoisgib.project_service.projects.permissions.models;
+package com.francoisgib.project_service.projects.user_project;
 
+import com.francoisgib.project_service.projects.permissions.models.ProjectPermission;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

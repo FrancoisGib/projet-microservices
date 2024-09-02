@@ -1,6 +1,7 @@
 config:
   paths:
     project-service: lb://project-service
+    kube-service: lb://kube-service
 
 eureka:
   client:

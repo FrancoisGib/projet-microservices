@@ -1,8 +1,6 @@
 package com.francoisgib.project_service.users.controllers;
 
-import com.francoisgib.project_service.ArtificialPage;
 import com.francoisgib.project_service.ResponseObject;
-import com.francoisgib.project_service.projects.models.ProjectDTO;
 import com.francoisgib.project_service.users.UserMapper;
 import com.francoisgib.project_service.users.UserResourceException;
 import com.francoisgib.project_service.users.models.UserCreationForm;
@@ -12,7 +10,6 @@ import java.util.List;
 
 import com.francoisgib.project_service.users.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -57,10 +54,5 @@ public class UserControllerImpl implements UserController {
 	public ResponseEntity<ResponseObject> deleteUser(long id) throws UserResourceException {
 		userService.deleteUser(id);
 		return new ResponseEntity<>(new ResponseObject("User successfully deleted", HttpStatus.OK.value()), HttpStatus.OK);
-	}
-
-	@Override
-	public ArtificialPage<ProjectDTO> getUserProjectsWithPaginationAndStartsWithName(long userId, String filterName, int pageNumber) {
-		return userService.getUserProjectsWithPagination(userId, filterName, pageNumber);
 	}
 }
